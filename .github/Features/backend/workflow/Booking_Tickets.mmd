@@ -1,0 +1,27 @@
+flowchart TD
+    %% Nodes
+        StartPoint(開始訂票流程)
+        CheckBookId{檢查訂票者ID}
+        isId(符合編碼)
+        ResponseIdError(回傳'訂票者ID輸入錯誤')
+        CheckThicketNumbers{訂購總數量是否超過10張}
+        ResponseTicketNumbersError(回傳'訂購數量不可以超過10張')
+        CheckEarlyBird{是否需要早鳥票}
+        CheckAdultNumbers{早鳥票ID與全票數量相同}
+        CountBookDate(判斷可訂購日期後，將資料新增至資料庫)
+        ResponseAdultNumbersError(回傳'全票與早鳥票數量需相同')
+        EndPoint(回傳'預約成功')
+
+    %% Edge connections between nodes
+        StartPoint --> CheckBookId
+        CheckBookId -->|Y|isId
+        CheckBookId -->|N|ResponseIdError
+        isId --> CheckThicketNumbers
+        CheckThicketNumbers -->|Y|ResponseTicketNumbersError
+        CheckThicketNumbers -->|N|CheckEarlyBird
+        CheckEarlyBird -->|Y|CheckAdultNumbers
+        CheckEarlyBird -->|N|CountBookDate
+        CheckAdultNumbers -->|Y|CountBookDate
+        CheckAdultNumbers -->|N|ResponseAdultNumbersError
+        CountBookDate --> EndPoint
+        
