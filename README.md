@@ -8,13 +8,13 @@
 - 資料庫：儲存站別資訊、預約資訊
 
 ### Github Copliot設計
-[v] 共用指令
-[] 前端相關指令、Agent與Skill
-[] 後端相關指令、Agent與Skill
-[] 爬蟲相關指令、Agent與Skill
-[] 前端需求設計
-[] 後段需求設計
-[] 爬蟲需求設計
+✅ 共用指令<br>
+[ ] 前端相關指令、Agent與Skill<br>
+❌ 後端相關指令、Agent與Skill<br>
+❌ 爬蟲相關指令、Agent與Skill<br>
+❌ 前端需求設計<br>
+❌ 後段需求設計<br>
+❌ 爬蟲需求設計<br>
 
 
 
