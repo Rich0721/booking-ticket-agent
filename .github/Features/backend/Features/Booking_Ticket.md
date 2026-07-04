@@ -29,6 +29,7 @@
               "elders": 0,
               "disables": 0,
               "is_early_bird": true,
+              "is_member": true,
               "early_ids": ["A123456789", "B123456789"]
           }
 

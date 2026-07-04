@@ -1,0 +1,13 @@
+flowchart TD
+    %% Nodes
+        StartPoint(開始查詢訂票資訊流程)
+        CheckBookId{檢查訂票者ID}
+        isId(符合編碼)
+        ResponseIdError(回傳'訂票者ID輸入錯誤')
+        EndPoint(回傳查詢結果)
+
+    %% Edge connections between nodes
+        StartPoint --> CheckBookId
+        CheckBookId -->|Y|isId
+        CheckBookId -->|N|ResponseIdError
+        isId --> EndPoint
