@@ -6,7 +6,7 @@
 
 ## II. 流程圖
 
-請參考[查詢訂票流程圖](../workflow/Booking_Tickets.mmd)
+請參考[查詢訂票流程圖](../workflow/Search_Booking.mmd)
 
 ## III. Request與Response說明
 
@@ -55,4 +55,5 @@
 ## IV. 需求說明
 
 - 訂票人ID以台灣身份證編碼方法進行檢查
--
+- 查詢T+1開始的預約資訊，如果沒有預約資訊回傳空陣列
+- 查詢訂票資訊來源[TB_BOOKING_TICKET](../../../../database/tables/TB_BOOKING_TICKET.sql)
