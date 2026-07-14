@@ -1,4 +1,4 @@
-# 查詢與刪除訂票功能
+# 查詢訂票功能
 
 ## I. 需求簡介
 
@@ -57,3 +57,4 @@
 - 訂票人ID以台灣身份證編碼方法進行檢查
 - 查詢T+1開始的預約資訊，如果沒有預約資訊回傳空陣列
 - 查詢訂票資訊來源[TB_BOOKING_TICKET](../../../../database/tables/TB_BOOKING_TICKET.sql)
+- [查詢訂票情境](./Scenarios/Search_Ticket.feature)
