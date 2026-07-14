@@ -41,7 +41,7 @@
   2. JSON Format
   ```JSON
       {
-          "info": {
+          "headers": {
               "message": "請根據需求回傳"
           }
       }

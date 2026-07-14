@@ -9,6 +9,7 @@
     "headers":{
         // 非功能性需求須保證每一個Request都據以headers
         // status_code, user_agent
+        // message放在此處，若無相關訊息則回傳空值
     },
     "info":{
         ... // key固定使用info，但內容根據需求有所調整

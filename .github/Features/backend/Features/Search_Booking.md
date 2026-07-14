@@ -37,7 +37,8 @@
                     "booking_time": "10:30",
                     "start_station": "台北",
                     "end_station": "左營",
-                    "ticket_number": "A12345"
+                    "ticket_number": "A12345",
+                    "canDelete": false
                 },
                 {
                     "id": 2,
@@ -45,7 +46,8 @@
                     "booking_time": "10:30",
                     "start_station": "台北",
                     "end_station": "左營",
-                    "ticket_number": ""
+                    "ticket_number": "",
+                    "canDelete": true
                 }
               ]
           }
@@ -56,5 +58,6 @@
 
 - 訂票人ID以台灣身份證編碼方法進行檢查
 - 查詢T+1開始的預約資訊，如果沒有預約資訊回傳空陣列
+- `ticket_number`為空則canDelete為true，否則為false
 - 查詢訂票資訊來源[TB_BOOKING_TICKET](../../../../database/tables/TB_BOOKING_TICKET.sql)
 - [查詢訂票情境](./Scenarios/Search_Ticket.feature)
