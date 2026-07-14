@@ -1,0 +1,10 @@
+flowchart TD
+    %% Nodes
+        StartPoint(開始刪除訂票資訊流程)
+        CheckBookId{查訂票編號是否存在}
+        EndPoint(回傳刪除結果)
+
+    %% Edge connections between nodes
+        StartPoint --> CheckBookId
+        CheckBookId -->|Y|EndPoint
+        CheckBookId -->|N|ResponseIdError
