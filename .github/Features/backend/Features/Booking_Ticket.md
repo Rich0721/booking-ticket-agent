@@ -58,3 +58,4 @@
   4. 預約日期如果在29天以後且為週日，可提早至離29日最近的週五，例如系統日為2026/7/1(三)，訂票日期為2026/8/2(日)，則回傳'2026/07/03將完成訂票，請記得查詢取票號碼'
 - 將預約訂票資訊新增至[TB_BOOKING_TICKET](../../../../database/tables/TB_BOOKING_TICKET.sql)
 - 早鳥票乘坐者新增至[TB_EARLY_BIRD](../../../../database/tables/TB_EARLY_BIRD.sql)
+- Gherkin情境說明請至[Feature](./Scenarios/Booking_Ticket.feature)
