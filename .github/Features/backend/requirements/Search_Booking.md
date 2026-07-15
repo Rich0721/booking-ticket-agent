@@ -18,6 +18,7 @@
 
 ## IV. 其它說明
 
+- API-Name: /search-booking-ticket
 - 共用定義定義由[非功能性需求](./Unfunctional.md)
 - Method: Post
 - Request body

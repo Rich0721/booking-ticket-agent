@@ -15,6 +15,7 @@
 
 ## IV. 其它說明
 
+- API-Name: /delete-booking-ticket
 - 共用定義定義由[非功能性需求](./Unfunctional.md)
 - Method: Delete
 - 刪除ID會從URI取得，Request Body僅有基本資訊
@@ -51,5 +52,3 @@
           }
       }
   ```
-
-
