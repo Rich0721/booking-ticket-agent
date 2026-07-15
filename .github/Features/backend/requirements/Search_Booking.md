@@ -8,7 +8,15 @@
 
 請參考[查詢訂票流程圖](../workflow/Search_Booking.mmd)
 
-## III. Request與Response說明
+## III. 需求說明
+
+- 訂票人ID以台灣身份證編碼方法進行檢查
+- 查詢T+1開始的預約資訊，如果沒有預約資訊回傳空陣列
+- `ticket_number`為空則canDelete為true，否則為false
+- 查詢訂票資訊來源[TB_BOOKING_TICKET](../../../../database/tables/TB_BOOKING_TICKET.sql)
+- [查詢訂票情境](./Scenarios/Search_Ticket.feature)
+
+## IV. 其它說明
 
 - 共用定義定義由[非功能性需求](./Unfunctional.md)
 - Method: Post
@@ -53,11 +61,3 @@
           }
       }
   ```
-
-## IV. 需求說明
-
-- 訂票人ID以台灣身份證編碼方法進行檢查
-- 查詢T+1開始的預約資訊，如果沒有預約資訊回傳空陣列
-- `ticket_number`為空則canDelete為true，否則為false
-- 查詢訂票資訊來源[TB_BOOKING_TICKET](../../../../database/tables/TB_BOOKING_TICKET.sql)
-- [查詢訂票情境](./Scenarios/Search_Ticket.feature)

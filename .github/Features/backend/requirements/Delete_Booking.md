@@ -8,7 +8,12 @@
 
 請參考[刪除預約訂票流程圖](../workflow/Delete_Booking.mmd)
 
-## III. Request與Response說明
+## III. 需求說明
+
+- 先於[TB_BOOKING_TICKET](../../../../database/tables/TB_BOOKING_TICKET.sql)查詢ID資訊
+- 若`TICKET_NUMBER`為空則進行刪除，否則回傳錯誤訊息"該資料已完成訂票，無法進行刪除"
+
+## IV. 其它說明
 
 - 共用定義定義由[非功能性需求](./Unfunctional.md)
 - Method: Delete
@@ -30,7 +35,8 @@
                     "booking_time": "10:30",
                     "start_station": "台北",
                     "end_station": "左營",
-                    "ticket_number": "A12345"
+                    "ticket_number": "A12345",
+                    "canDelete": false
                 },
                 {
                     "id": 2,
@@ -38,14 +44,12 @@
                     "booking_time": "10:30",
                     "start_station": "台北",
                     "end_station": "左營",
-                    "ticket_number": ""
+                    "ticket_number": "",
+                    "canDelete": true
                 }
               ]
           }
       }
   ```
 
-## IV. 需求說明
 
-- 先於[TB_BOOKING_TICKET](../../../../database/tables/TB_BOOKING_TICKET.sql)查詢ID資訊
-- 若`TICKET_NUMBER`為空則進行刪除，否則回傳錯誤訊息"該資料已完成訂票，無法進行刪除"
