@@ -6,5 +6,5 @@
 
 - 需求說明: 完成後端對應功能的開發
 - 需求參考資料: [預約訂票](./requirements/Booking_Ticket.md), [查詢訂票](./requirements/Search_Booking.md), [取消訂票](./requirements/Delete_Booking.md), [選單選項](./requirements/Loading_Selected.md)
-- 完成開發:
+- 完成開發: 2026/07/15
 - PM確認:
