@@ -46,3 +46,4 @@ booking-ticket-agent/
 | | | └── EUserPermission.py # 使用者權限列舉
 | | └── main.py # FastApi啟動程式碼
 | └── tests/ # 單元測試程式碼
+|    └── scenarios # 單元測試單一情境，不同的測資
