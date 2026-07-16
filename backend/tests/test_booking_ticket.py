@@ -207,12 +207,12 @@ class TestBookingTicketService:
             assert "2026/07/05" in message
     
     def test_booking_30plus_days_sunday(self, service):
-        """測試搭乘日在30天後且為週日 - Scenario: 系統日2026/07/01, 搭乘日2026/08/02(日)"""
+        """測試搭乘日在30天後且為週日 - Scenario: 系統日2026/07/01, 搭乘日2026/08/16(日)"""
         system_date = datetime(2026, 7, 1)
         booking_info = CBookingTicketInfo(
             user_id=VALID_TEST_ID_1,
             ticket_type="THSR",
-            booking_date=date(2026, 8, 2),
+            booking_date=date(2026, 8, 16),
             booking_time="10:30",
             start_station="台北",
             end_station="左營",
@@ -230,7 +230,7 @@ class TestBookingTicketService:
             mock_validate.return_value = True
             success, message = service.process_booking(booking_info, system_date)
             assert success
-            assert "2026/07/03" in message
+            assert "2026/07/17" in message
     
     def test_booking_with_early_bird(self, service):
         """測試帶有早鳥票的預約 - Scenario: 使用者預約早鳥票"""
@@ -288,9 +288,9 @@ class TestDateCalculator:
     def test_date_30plus_days_sunday(self):
         """測試30天後週日的日期計算 - Scenario: 搭乘日為週日調整至週五"""
         system_date = date(2026, 7, 1)
-        travel_date = date(2026, 8, 2)
+        travel_date = date(2026, 8, 16)
         result = calculate_booking_date(system_date, travel_date)
-        assert result == date(2026, 7, 3)
+        assert result == date(2026, 7, 17)
         assert result.weekday() == 4  # Friday
     
     def test_date_same_day_error(self):

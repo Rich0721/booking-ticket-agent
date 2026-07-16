@@ -13,5 +13,5 @@
 
 - 需求說明: 修復test_booking_ticket.py，根據規格調整程式碼
 - 需求參考資料: [預約訂票](./requirements/Booking_Ticket.md)
-- 完成開發:
+- 完成開發: 2026-07-16
 - PM確認:
