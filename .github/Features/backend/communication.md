@@ -11,7 +11,9 @@
 
 ### New Requirement 2
 
-- 需求說明: 修復test_booking_ticket.py，根據規格調整程式碼
-- 需求參考資料: [預約訂票](./requirements/Booking_Ticket.md)
+- 需求說明:
+  - 將TestBookingTicketService與TestDateCalculator區分成不同檔案進行開發
+  - 根據情境檔案減少測試程式碼，通過使用@pytest.mark.parametrize進行多種情境模擬
+- 需求參考資料: [測試檔案](./requirements/Test_Booking_Ticket.md)
 - 完成開發: 2026-07-16
 - PM確認:
