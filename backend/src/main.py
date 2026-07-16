@@ -1,11 +1,11 @@
 from fastapi import FastAPI
-from src.controllers import booking_ticket_controller
+from src.controllers import BookingTicketController
 
 
 app = FastAPI()
 
 # 註冊路由
-app.include_router(booking_ticket_controller.router)
+app.include_router(BookingTicketController.router)
 
 
 @app.get("/health")
