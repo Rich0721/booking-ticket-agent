@@ -17,3 +17,13 @@
 - 需求參考資料: [測試檔案](./requirements/Test_Booking_Ticket.md)
 - 完成開發: 2026-07-16
 - PM確認:
+
+### Requirement - 實作BookingTicketRepository
+
+- 分支名稱: feature_booking_ticket_repository
+- 需求說明:
+  - 將create_booking和create_early_bird方法進行實作，確保資料可以正確insert至資料庫中
+  - 確認Unit Test可以Mock資料庫，並且測試可以通過
+- 需求參考資料: [TB_BOOKING_TICKET](../../../database/tables/TB_BOOKING_TICKET.sql)、[TB_EARLY_BIRD](../../../database/tables/TB_EARLY_BIRD.sql)
+- 完成開發: 2026-07-16
+- PM確認:
