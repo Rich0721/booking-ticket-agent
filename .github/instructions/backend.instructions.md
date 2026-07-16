@@ -34,10 +34,10 @@ applyTo: "backend/**/*.py"
 
 - Unit Test測試**services**與**utils**為主
 - 檔案命名需要區分，不要把不同功能的測試放在同一個檔案，例如不同serivce或不同util的測試需要分開撰寫，檔案命名方式如下:
-  - services: test\_[service_name].py
-  - utils: test\_[util_name].py
+  - services: test[_<service_name>].py
+  - utils: test[_<util_name>].py
 - 測試功能命名根據測試屬性定義
-  - test*[function_name]*[情境名稱]
+  - test[_<function_name>_<情境名稱>]
 - 參考scenarios文件撰寫對應的測試情境，並在測試程式碼中註解來源，以利追蹤需求來源與維護
   - 當scenarios使用 Scenario Outline時，請撰寫單一測試情境，並使用pytest.mark.parametrize進行測試
 
@@ -80,7 +80,7 @@ applyTo: "backend/**/*.py"
           assert "不接受當天或過去的預約訂票" in message
   ```
 
-## 4. 後端資料夾結構
+## 5. 後端資料夾結構
 
 booking-ticket-agent/
 ├── backend/ # 後端程式碼
