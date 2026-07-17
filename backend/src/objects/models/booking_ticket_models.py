@@ -1,5 +1,5 @@
 """
-預約訂票ORM模型定義
+預約訂票ORM模型定義，包括BookingTicket和EarlyBird兩個模型。
 """
 
 from datetime import datetime
@@ -11,7 +11,7 @@ Base = declarative_base()
 
 class BookingTicket(Base):
     """預約訂票表模型"""
-    __tablename__ = "TB_BOOKING_THICKET"
+    __tablename__ = "TB_BOOKING_TICKET"
     
     booking_id = Column(BIGINT, primary_key=True, autoincrement=True)
     user_id = Column(String(10), nullable=False)
@@ -41,7 +41,7 @@ class EarlyBird(Base):
     __tablename__ = "TB_EARLY_BIRD"
     
     early_bird_id = Column(BIGINT, primary_key=True, autoincrement=True)
-    booking_id = Column(BIGINT, ForeignKey("TB_BOOKING_THICKET.booking_id"), nullable=False)
+    booking_id = Column(BIGINT, ForeignKey("TB_BOOKING_TICKET.booking_id"), nullable=False)
     user_id = Column(String(10), nullable=False)
     created_time = Column(DateTime, default=datetime.utcnow)
     updated_time = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
