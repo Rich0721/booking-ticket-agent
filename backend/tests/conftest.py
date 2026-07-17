@@ -3,8 +3,13 @@ pytest配置文件和公共fixtures
 """
 
 import pytest
+import os
 from unittest.mock import Mock, MagicMock
 from sqlalchemy.orm import Session
+from dotenv import load_dotenv
+
+# 載入測試環境變數
+load_dotenv(os.path.join(os.path.dirname(__file__), "../env/.env.dev"))
 
 
 @pytest.fixture

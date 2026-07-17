@@ -1,21 +1,40 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from datetime import datetime
 from src.utils.models import BookingTicketRequest, BookingTicketResponse
 from src.objects.classes.CBookingTicketInfo import CBookingTicketInfo
 from src.services.BookingTicketService import BookingTicketService
 from src.repositories.BookingTicketRepository import BookingTicketRepository
+from src.config.database import get_db_session
+from sqlalchemy.orm import Session
 
 
 router = APIRouter()
 
 
+def get_repository(db_session: Session = Depends(get_db_session)) -> BookingTicketRepository:
+    """
+    Dependency injection: 取得BookingTicketRepository實例
+    
+    Args:
+        db_session: 資料庫Session
+        
+    Returns:
+        BookingTicketRepository: Repository實例
+    """
+    return BookingTicketRepository(db_session)
+
+
 @router.post("/booking-ticket")
-async def booking_ticket(request: BookingTicketRequest) -> dict:
+async def booking_ticket(
+    request: BookingTicketRequest,
+    repository: BookingTicketRepository = Depends(get_repository)
+) -> dict:
     """
     預約訂票API
     
     Args:
         request: 預約訂票請求資訊
+        repository: 依賴注入的Repository
         
     Returns:
         預約訂票結果
@@ -42,8 +61,6 @@ async def booking_ticket(request: BookingTicketRequest) -> dict:
         )
         
         # 建立服務層實例
-        # TODO: 從dependency injection獲取repository
-        repository = BookingTicketRepository(None)
         service = BookingTicketService(repository)
         
         # 處理預約訂票
