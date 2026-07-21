@@ -4,8 +4,8 @@
 
 ### Requirement - 實作共通元件
 
-- 分支名稱: feature_common_component
-- 需求說明: 請根據需求文件實作共通元件，並撰寫對應的Unit Test，確保所有需求都有通過Unit Test，並且將所有元件在mainPage整合顯示，提供PM確認無誤。
+- 分支名稱: feature_ID_component
+- 需求說明: 請根據**共通需求文件**的**身份證字號輸入Component**說明完成實作該Component即可，其餘請不要實作，並且通過Pages顯示實作結果
 - 需求參考資料: [共通需求文件](./requirements/Common.md)
 - 完成開發:
 - PM確認:

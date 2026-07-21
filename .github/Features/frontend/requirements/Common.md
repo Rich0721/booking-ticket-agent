@@ -8,17 +8,16 @@
 
 ### 2-1 身份證字號輸入Component
 
-- UI設計圖: [身份證字號輸入](../UI/Commons/components/Common_ID.png)
-- icon: [身份證字號輸入icon](../UI/Commons/icons/user.png)
 - 需求說明:
   - CSS需要有RWD功能
-  - icon需置中放置，此Component的icon固定
+  - 排版說明: [Icon] [Title] [Textbox]
+  - Icon:需置中放置，固定來源都是assert/images/icons
+  - Title: 預設為身份證字號，可提供開發者當作參數進行調整，並且固定置中
   - Textbox
     - Type: text
     - Pattern: 台灣身份證編碼方式
     - MaxLength: 10(提供調整)
-    - 僅顯示前面5碼，後5碼顯示\*，例如: A1234**\***
-  - ErrorMessage: '身份證字號格式錯誤，請重新輸入
+  - ErrorMessage: '身份證字號格式錯誤，請重新輸入'
   - ErrorMessage顯示位置: Textbox下方
   - ErrorMessage顯示條件: 當Textbox失去焦點，且輸入值不符合台灣身份證編碼方式時，顯示ErrorMessage
 
