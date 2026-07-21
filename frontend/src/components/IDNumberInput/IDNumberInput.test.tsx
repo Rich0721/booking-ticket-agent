@@ -41,7 +41,9 @@ describe("IDNumberInput Component", () => {
     fireEvent.blur(input);
 
     // 驗證錯誤訊息不顯示
-    const errorMessage = screen.queryByTestId("error-message");
+    const errorMessage = screen.queryByTestId(
+      "error-message",
+    ) as HTMLElement | null;
     expect(errorMessage).not.toBeInTheDocument();
     expect(input).not.toHaveClass("id-number-input__textbox--error");
   });
@@ -56,7 +58,9 @@ describe("IDNumberInput Component", () => {
     fireEvent.blur(input);
 
     // 驗證錯誤訊息不顯示
-    const errorMessage = screen.queryByTestId("error-message");
+    const errorMessage = screen.queryByTestId(
+      "error-message",
+    ) as HTMLElement | null;
     expect(errorMessage).not.toBeInTheDocument();
   });
 
@@ -138,14 +142,14 @@ describe("IDNumberInput Component", () => {
     fireEvent.blur(input);
 
     // 驗證錯誤訊息顯示
-    let errorMessage = screen.getByTestId("error-message");
+    let errorMessage: HTMLElement | null = screen.getByTestId("error-message");
     expect(errorMessage).toBeInTheDocument();
 
     // 重新獲得焦點
     fireEvent.focus(input);
 
     // 驗證錯誤訊息暫時隱藏
-    errorMessage = screen.queryByTestId("error-message");
+    errorMessage = screen.queryByTestId("error-message") as HTMLElement | null;
     expect(errorMessage).not.toBeInTheDocument();
   });
 
@@ -163,7 +167,7 @@ describe("IDNumberInput Component", () => {
     fireEvent.change(input, { target: { value: "" } });
     fireEvent.change(input, { target: { value: "A100000001@#" } });
 
-    // 驗證特殊字符被過濾（保留合有效字符）
+    // 驗證特殊字符被過濾
     expect(input.value).toMatch(/^[A-Z0-9]*$/);
   });
 
@@ -179,7 +183,9 @@ describe("IDNumberInput Component", () => {
       fireEvent.change(input, { target: { value: validID } });
       fireEvent.blur(input);
 
-      const errorMessage = screen.queryByTestId("error-message");
+      const errorMessage = screen.queryByTestId(
+        "error-message",
+      ) as HTMLElement | null;
       expect(errorMessage).not.toBeInTheDocument();
 
       unmount();
