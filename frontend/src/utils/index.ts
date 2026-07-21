@@ -1,0 +1,1 @@
+export { isValidTaiwanID } from "./idValidator";
