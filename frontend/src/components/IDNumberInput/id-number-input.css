@@ -32,9 +32,11 @@
 /* Content Section (Title + Textbox + Error) */
 .id-number-input__content {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   gap: 0.5rem;
   flex: 1;
+  flex-wrap: wrap;
 }
 
 /* Title */
@@ -45,11 +47,14 @@
   text-align: center;
   margin: 0;
   line-height: 1.4;
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 /* Textbox */
 .id-number-input__textbox {
-  width: 100%;
+  flex: 1;
+  min-width: 150px;
   padding: 0.75rem;
   font-size: 1rem;
   border: 2px solid #ccc;
@@ -85,6 +90,7 @@
   color: #ff0000;
   font-size: 0.875rem;
   margin-top: 0.25rem;
+  flex-basis: 100%;
 }
 
 /* Responsive Design */
