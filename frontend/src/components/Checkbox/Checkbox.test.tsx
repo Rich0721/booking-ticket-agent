@@ -92,6 +92,7 @@ describe("Checkbox Component", () => {
     expect(() =>
       render(
         <Checkbox
+          // @ts-expect-error 故意測試錯誤資料: Icon 使用不一致，應在型別層被攔截
           options={
             [
               { label: "早鳥", value: "EARLY", icon: "/icons/bird.png" },
@@ -109,6 +110,7 @@ describe("Checkbox Component", () => {
     expect(() =>
       render(
         <Checkbox
+          // @ts-expect-error 故意測試錯誤資料: value 重複，應在型別層被攔截
           options={
             [
               { label: "早鳥", value: "EARLY" },
