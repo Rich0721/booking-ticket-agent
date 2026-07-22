@@ -23,7 +23,7 @@
 - 分支名稱: feature_checkbox_component
 - 需求說明: 請根據**需求文件**說明完成實作該Component即可，其餘請不要實作，並且通過Pages顯示實作結果
 - 需求參考資料: [需求文件](./requirements/Checkbox_Component.md)
-- 完成開發:
+- 完成開發: 2026-07-22
 - PM確認:
 
 ### Requirement - Ticket Number Compoenent實作
@@ -45,9 +45,9 @@
 ### Requirement - Home Page 實作
 
 - 分支名稱: feature_home_page
-- 需求說明: 
-    - 請根據**需求文件**說明完成實作即可。
-    - 確認後須調整: Header的**Auto Booking**需要置中在兩個顏色交界處，而非完全放在橘色區域
+- 需求說明:
+  - 請根據**需求文件**說明完成實作即可。
+  - 確認後須調整: Header的**Auto Booking**需要置中在兩個顏色交界處，而非完全放在橘色區域
 - 需求參考資料: [需求文件](./requirements/Home_Page.md)
 - 完成開發: 2026-07-22
 - PM確認:
