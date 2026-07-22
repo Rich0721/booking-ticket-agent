@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Checkbox from "../components/Checkbox/Checkbox";
+import TicketNumber from "../components/TicketNumber/TicketNumber";
 import "./home-page.css";
 
 type NavKey = "home" | "thsr" | "tra" | "search";
@@ -7,6 +8,7 @@ type NavKey = "home" | "thsr" | "tra" | "search";
 const HomePage: React.FC = () => {
   const [activeSection, setActiveSection] = useState<NavKey>("home");
   const [selectedTicketTags, setSelectedTicketTags] = useState<string>("");
+  const [ticketCount, setTicketCount] = useState<number>(0);
 
   const renderContent = () => {
     if (activeSection === "home") {
@@ -36,44 +38,71 @@ const HomePage: React.FC = () => {
 
     if (activeSection === "search") {
       return (
-        <div className="home-page__checkbox-demo">
-          <h2 className="home-page__checkbox-demo-title">
-            Checkbox Component 展示
-          </h2>
-          <p className="home-page__checkbox-demo-description">
-            請勾選適用的票種，元件會回傳逗號分隔字串。
-          </p>
+        <div className="home-page__component-showcase">
+          <div className="home-page__checkbox-demo">
+            <h2 className="home-page__checkbox-demo-title">
+              Checkbox Component 展示
+            </h2>
+            <p className="home-page__checkbox-demo-description">
+              請勾選適用的票種，元件會回傳逗號分隔字串。
+            </p>
 
-          <Checkbox
-            required
-            options={
-              [
-                {
-                  label: "早鳥優惠",
-                  value: "EARLY_BIRD",
-                  icon: "/icons/bird.png",
-                },
-                {
-                  label: "學生票",
-                  value: "STUDENT",
-                  icon: "/icons/students.png",
-                },
-                {
-                  label: "敬老票",
-                  value: "ELDERLY",
-                  icon: "/icons/elderly.png",
-                },
-              ] as const
-            }
-            onChange={setSelectedTicketTags}
-          />
+            <Checkbox
+              required
+              options={
+                [
+                  {
+                    label: "早鳥優惠",
+                    value: "EARLY_BIRD",
+                    icon: "/icons/bird.png",
+                  },
+                  {
+                    label: "學生票",
+                    value: "STUDENT",
+                    icon: "/icons/students.png",
+                  },
+                  {
+                    label: "敬老票",
+                    value: "ELDERLY",
+                    icon: "/icons/elderly.png",
+                  },
+                ] as const
+              }
+              onChange={setSelectedTicketTags}
+            />
 
-          <p
-            className="home-page__checkbox-demo-result"
-            data-testid="checkbox-result"
-          >
-            目前回傳值: {selectedTicketTags || ""}
-          </p>
+            <p
+              className="home-page__checkbox-demo-result"
+              data-testid="checkbox-result"
+            >
+              目前回傳值: {selectedTicketTags || ""}
+            </p>
+          </div>
+
+          <div className="home-page__ticket-number-demo">
+            <h2 className="home-page__ticket-number-title">
+              Ticket Number Component 展示
+            </h2>
+            <p className="home-page__ticket-number-description">
+              請輸入購買票數，元件會以 number 型別回傳。
+            </p>
+
+            <TicketNumber
+              title="成人票"
+              iconSrc="/icons/people.png"
+              min={0}
+              max={10}
+              value={ticketCount}
+              onChange={setTicketCount}
+            />
+
+            <p
+              className="home-page__ticket-number-result"
+              data-testid="ticket-number-result"
+            >
+              目前回傳值: {ticketCount}
+            </p>
+          </div>
         </div>
       );
     }
