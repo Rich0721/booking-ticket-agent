@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import Checkbox from "../components/Checkbox/Checkbox";
 import "./home-page.css";
 
 type NavKey = "home" | "thsr" | "tra" | "search";
 
 const HomePage: React.FC = () => {
   const [activeSection, setActiveSection] = useState<NavKey>("home");
+  const [selectedTicketTags, setSelectedTicketTags] = useState<string>("");
 
   const renderContent = () => {
     if (activeSection === "home") {
@@ -28,6 +30,50 @@ const HomePage: React.FC = () => {
               <img src="/images/tech-icons.png" alt="Tech stack icon" />
             </div>
           </div>
+        </div>
+      );
+    }
+
+    if (activeSection === "search") {
+      return (
+        <div className="home-page__checkbox-demo">
+          <h2 className="home-page__checkbox-demo-title">
+            Checkbox Component 展示
+          </h2>
+          <p className="home-page__checkbox-demo-description">
+            請勾選適用的票種，元件會回傳逗號分隔字串。
+          </p>
+
+          <Checkbox
+            required
+            options={
+              [
+                {
+                  label: "早鳥優惠",
+                  value: "EARLY_BIRD",
+                  icon: "/icons/bird.png",
+                },
+                {
+                  label: "學生票",
+                  value: "STUDENT",
+                  icon: "/icons/students.png",
+                },
+                {
+                  label: "敬老票",
+                  value: "ELDERLY",
+                  icon: "/icons/elderly.png",
+                },
+              ] as const
+            }
+            onChange={setSelectedTicketTags}
+          />
+
+          <p
+            className="home-page__checkbox-demo-result"
+            data-testid="checkbox-result"
+          >
+            目前回傳值: {selectedTicketTags || ""}
+          </p>
         </div>
       );
     }
