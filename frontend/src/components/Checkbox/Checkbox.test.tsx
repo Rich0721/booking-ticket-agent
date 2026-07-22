@@ -86,6 +86,42 @@ describe("Checkbox Component", () => {
     expect(onChange).toHaveBeenLastCalledWith("");
   });
 
+  // Scenario: 點選一次即可勾選且父層重渲染不重置
+  // Reference: communication.md - Checkbox實作調整
+  it("should keep checked state after parent re-renders with recreated options", () => {
+    const Wrapper: React.FC = () => {
+      const [selectedValue, setSelectedValue] = React.useState<string>("");
+
+      return (
+        <>
+          <Checkbox
+            options={
+              [
+                { label: "早鳥", value: "EARLY", icon: "/icons/bird.png" },
+                {
+                  label: "學生",
+                  value: "STUDENT",
+                  icon: "/icons/students.png",
+                },
+              ] as const
+            }
+            onChange={setSelectedValue}
+          />
+          <div data-testid="selected-value">{selectedValue}</div>
+        </>
+      );
+    };
+
+    render(<Wrapper />);
+
+    fireEvent.click(screen.getByTestId("checkbox-input-EARLY"));
+
+    expect(screen.getByTestId("selected-value").textContent).toBe("EARLY");
+    expect(
+      (screen.getByTestId("checkbox-input-EARLY") as HTMLInputElement).checked,
+    ).toBe(true);
+  });
+
   // Scenario: Icon 使用規則一致性檢查
   // Reference: Checkbox_Component.md - 開發錯誤檢測
   it("should throw error when icon usage is inconsistent", () => {

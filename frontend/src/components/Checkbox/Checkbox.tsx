@@ -43,6 +43,15 @@ const Checkbox = <T extends readonly CheckboxOption[]>({
 }: ICheckboxProps<T>) => {
   validateOptions(options);
 
+  const optionsSignature = useMemo(() => {
+    return options
+      .map((option) => {
+        const iconValue = "icon" in option ? option.icon : "";
+        return `${option.value}:${option.defaultChecked ? 1 : 0}:${iconValue}`;
+      })
+      .join("|");
+  }, [options]);
+
   const [selectedValues, setSelectedValues] = useState<string[]>(() =>
     getInitialSelectedValues(options),
   );
@@ -51,7 +60,7 @@ const Checkbox = <T extends readonly CheckboxOption[]>({
   useEffect(() => {
     setSelectedValues(getInitialSelectedValues(options));
     setHasInteracted(false);
-  }, [options]);
+  }, [optionsSignature]);
 
   const hasIcon = useMemo(() => hasIconInAllOptions(options), [options]);
 
