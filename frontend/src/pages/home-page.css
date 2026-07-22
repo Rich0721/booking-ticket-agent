@@ -163,6 +163,39 @@
   color: #090909;
 }
 
+.home-page__component-showcase {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.home-page__ticket-number-demo {
+  width: 100%;
+  max-width: 720px;
+}
+
+.home-page__ticket-number-title {
+  margin: 0 0 8px;
+  font-size: 36px;
+  color: #090909;
+}
+
+.home-page__ticket-number-description {
+  margin: 0 0 20px;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.home-page__ticket-number-result {
+  margin: 16px 0 0;
+  font-size: 18px;
+  color: #090909;
+}
+
 @media (max-width: 900px) {
   .home-page__hero {
     grid-template-columns: 1fr;
@@ -184,6 +217,18 @@
   }
 
   .home-page__checkbox-demo-description {
+    font-size: 18px;
+  }
+
+  .home-page__component-showcase {
+    grid-template-columns: 1fr;
+  }
+
+  .home-page__ticket-number-title {
+    font-size: 30px;
+  }
+
+  .home-page__ticket-number-description {
     font-size: 18px;
   }
 }

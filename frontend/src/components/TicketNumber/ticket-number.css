@@ -1,0 +1,73 @@
+.ticket-number-container {
+  width: 100%;
+  max-width: 320px;
+  padding: 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.ticket-number__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.ticket-number__title {
+  color: #111111;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.ticket-number__icon-wrapper {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+}
+
+.ticket-number__icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.ticket-number__input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #bfbfbf;
+  border-radius: 8px;
+  padding: 0 10px;
+  font-size: 18px;
+  color: #111111;
+}
+
+.ticket-number__input--error {
+  border-color: #d24141;
+}
+
+.ticket-number__error {
+  margin-top: 8px;
+  color: #d24141;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .ticket-number-container {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .ticket-number__title {
+    font-size: 16px;
+  }
+
+  .ticket-number__input {
+    height: 40px;
+    font-size: 16px;
+  }
+}
