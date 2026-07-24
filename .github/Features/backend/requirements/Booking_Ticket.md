@@ -23,5 +23,5 @@
 
 ## IV. 其它說明
 
-- API定義請參考[THSR訂票上下行電文](../api/Booking_THSR.md)
+- API定義請參考[THSR訂票上下行電文](../../api/Booking_THSR.md)
 - 共用定義定義由[非功能性需求](./Unfunctional.md)

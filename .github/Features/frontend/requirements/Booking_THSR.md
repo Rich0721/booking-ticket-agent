@@ -1,37 +1,100 @@
 # 高鐵預約訂票(前端)
 
 ## I. 需求簡介
+
 前端提供使用者操作介面，使用者可以透過此介面進行高鐵的預約訂票
 
-## II. UI設計
-- [主畫面](../UI/Booking_THSR.png)
-- [訂票確認彈跳視窗](../UI/THSR_Double_Check.png)
+## II. 需求說明
 
-## III. 需求說明
-- 訂票身份證字號: 訂票者ID，當使用者輸入完畢移開選定後，自動執行台灣身份證編碼方式檢查
-- 早鳥優先是Checkbox，預設**勾選**
-- 使用會員資格是Checkbox，預設**勾選**
-- 搭乘日期: 僅能選擇T+1開始的日期，T與T-N皆無法進行選擇
-- 達成時間: 使用/loading-selected?parm_category=THSR_TIME載入選單，並將選單資料回傳給前端渲染
-- 搭乘起站: 使用/loading-selected?parm_category=THSR_STATION載入選單，並將選單資料回傳給前端渲染
-- 搭乘迄站: 使用/loading-selected?parm_category=THSR_STATION載入選單，並將選單資料回傳給前端渲染
-- 成人票預設為1張，其餘皆預設為0張，使用者可以自行調整票數
-- 早鳥票框架顯示說明:
-  - 當使用者有將**早鳥優先**設定為勾選
-  - 當使用者有預定**成人票**，早鳥票輸入框數量根據成人票數輛顯示
-- 點選確認訂票檢查條件:
-  - 檢查身份證字號是否符合台灣身份證編碼方式，如果不符合，則在身份證字號輸入框下方顯示錯誤訊息
-  - 檢查搭乘日期是否符合T+1的規則，如果不符合，則在搭乘日期輸入框下方顯示錯誤訊息
-  - 檢查搭乘起站與搭乘迄站是否相同，如果相同，則在搭乘迄站輸入框下方顯示錯誤訊息
-  - 檢查總票數是否為0，如果是，則在總票數輸入框下方顯示錯誤訊息
-  - 檢查總票數是否超過10張，如果是，則在總票數輸入框下方顯示錯誤訊息
-  - 如果**早鳥優先**被勾選
-    - 需要檢查早鳥搭乘身份證字號是否都有輸入，並且早鳥搭乘身份證字號是否符合台灣身份證編碼方式，如果不符合，則在早鳥搭乘身份證字號輸入框下方顯示錯誤訊息
-    - 早鳥搭乘身份證字號不可有重複，如果有重複，則在早鳥搭乘身份證字號輸入框下方顯示錯誤訊息
-  - 完成以上檢查會跳出**確認訂票彈跳視窗**
-- 彈跳視窗點選邏輯
-  - 點選**取消預約**關閉彈跳視窗，不會將資料送出並且保留填寫狀態
-  - 點選**確認預約**將資料透過**/booking-ticket**送給後端進行處理，並且關閉彈跳視窗，清空填寫狀態
+- 請根據**高鐵預約訂票介面**顯示設計前端畫面，並且根據Component需求進行組裝前端，若有需求未指定的Component，請與PM討論再開發，請勿自行開發Component
+- 參考API格式: [THSR訂票上下行電文](../../api/Booking_THSR.md)
+- Component需求定義:
+  - 身份證字號
+    - 使用[ID Component](../requirements/ID_Component.md)
+    - Title: 身份證字號
+    - Placeholder: 請輸入身份證字號
+    - JsonKey: user_id
+  - 會員資格:
+    - 使用[CheckBox Component](../requirements/Checkbox_Component.md)
+    - Title: 使用高鐵會員
+    - Icon: 使用**public/icons/membership.png**
+    - 預設不勾選
+    - 非必填欄位
+    - JsonKey: is_member
+  - 搭乘日期:
+    - 使用[Date Component](../requirements/Date_Component.md)
+    - Title: 搭乘日期
+    - 必填
+    - JsonKey: booking_date
+  - 搭乘時間:
+    - 使用[Select Component](../requirements/Selection_Component.md)
+    - Title: 搭乘時間
+    - Icon: 使用**public/icons/clock.png**
+    - parm_category: THSR_TIME
+    - 必填
+    - JsonKey: booking_time
+  - 搭乘起站:
+    - 使用[Select Component](../requirements/Selection_Component.md)
+    - Title: 搭乘起站
+    - Icon: 使用**public/icons/transport.png**
+    - parm_category: THSR_STATION
+    - 必填
+    - JsonKey: start_station
+  - 搭乘迄站:
+    - 使用[Select Component](../requirements/Selection_Component.md)
+    - Title: 搭乘迄站
+    - Icon: 使用**public/icons/transport.png**
+    - parm_category: THSR_STATION
+    - 必填
+    - JsonKey: end_station
+  - 購買票券數量需求:
+    - 總輸入數量不可以超過10張，由選**預約訂票**按鈕進行檢查
+    - 成人票:
+      - 使用[Number Component](../requirements/Number_Component.md)
+      - Title: 成人票
+      - Icon: 使用**public/icons/people.png**
+      - 預設為0張
+      - 必填
+      - JsonKey: adults
+    - 兒童票:
+      - 使用[Number Component](../requirements/Number_Component.md)
+      - Title: 兒童票
+      - Icon: 使用**public/icons/children.png**
+      - 預設為0張
+      - 必填
+      - JsonKey: childs
+    - 敬老票:
+      - 使用[Number Component](../requirements/Number_Component.md)
+      - Title: 敬老票
+      - Icon: 使用**public/icons/elderly.png**
+      - 預設為0張
+      - 必填
+      - JsonKey: elders
+    - 愛心票:
+      - 使用[Number Component](../requirements/Number_Component.md)
+      - Title: 愛心票
+      - Icon: 使用**public/icons/disabled.png**
+      - 預設為0張
+      - 必填
+      - JsonKey: disables
+    - 學生票:
+      - 使用[Number Component](../requirements/Number_Component.md)
+      - Title: 學生票
+      - Icon: 使用**public/icons/students.png**
+      - 預設為0張
+      - 必填
+      - JsonKey: students
+  - 購買早鳥票需求:
+    - 預約日期在T+1~T+5時，早鳥票輸入框不顯示
+    - 預約日期為T+6時，根據**成人票數量**顯示早鳥ID輸入框
+    - 有顯示則一律**必填**
+    - 所有的早鳥ID不可重複
+    - 早鳥ID輸入:
+      - 使用[ID Component](../requirements/ID_Component.md)
+      - Title: 早鳥1(1~10根據成人票數量顯示)
+    - JsonKey: early_ids，為陣列格式，依序放入早鳥ID的值
 
-## IV. 其他說明
-- 訂票身份證字號和早鳥搭乘身份證字號的Textbox使用相同的檢查方式，皆使用台灣身份證編碼方式進行檢查，並在輸入框下方顯示錯誤訊息
+### III. 前端顯示畫面
+
+![高鐵預約訂票介面](../UI/THSR.png)
+![彈跳確認視窗](../UI/THSR_Double_Check.png)
