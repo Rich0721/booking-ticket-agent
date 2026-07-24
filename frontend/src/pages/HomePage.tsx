@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Checkbox from "../components/Checkbox/Checkbox";
 import TicketNumber from "../components/TicketNumber/TicketNumber";
+import Selection from "../components/Selection/Selection";
 import "./home-page.css";
 
 type NavKey = "home" | "thsr" | "tra" | "search";
@@ -9,6 +10,7 @@ const HomePage: React.FC = () => {
   const [activeSection, setActiveSection] = useState<NavKey>("home");
   const [selectedTicketTags, setSelectedTicketTags] = useState<string>("");
   const [ticketCount, setTicketCount] = useState<number>(0);
+  const [selectedStation, setSelectedStation] = useState<string>("");
 
   const renderContent = () => {
     if (activeSection === "home") {
@@ -101,6 +103,30 @@ const HomePage: React.FC = () => {
               data-testid="ticket-number-result"
             >
               目前回傳值: {ticketCount}
+            </p>
+          </div>
+
+          <div className="home-page__selection-demo">
+            <h2 className="home-page__selection-demo-title">
+              Selection Component 展示
+            </h2>
+            <p className="home-page__selection-demo-description">
+              請選擇搭乘起站，元件會回傳選擇的value值。
+            </p>
+
+            <Selection
+              iconSrc="/icons/time-planning.png"
+              title="搭乘起站"
+              parmCategory="THSR_STATION"
+              required
+              onChange={setSelectedStation}
+            />
+
+            <p
+              className="home-page__selection-demo-result"
+              data-testid="selection-result"
+            >
+              目前回傳值: {selectedStation}
             </p>
           </div>
         </div>

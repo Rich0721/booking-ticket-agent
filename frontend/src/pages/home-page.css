@@ -196,6 +196,29 @@
   color: #090909;
 }
 
+.home-page__selection-demo {
+  width: 100%;
+  max-width: 720px;
+}
+
+.home-page__selection-demo-title {
+  margin: 0 0 8px;
+  font-size: 36px;
+  color: #090909;
+}
+
+.home-page__selection-demo-description {
+  margin: 0 0 20px;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.home-page__selection-demo-result {
+  margin: 16px 0 0;
+  font-size: 18px;
+  color: #090909;
+}
+
 @media (max-width: 900px) {
   .home-page__hero {
     grid-template-columns: 1fr;
@@ -226,6 +249,14 @@
 
   .home-page__ticket-number-title {
     font-size: 30px;
+  }
+
+  .home-page__selection-demo-title {
+    font-size: 30px;
+  }
+
+  .home-page__selection-demo-description {
+    font-size: 18px;
   }
 
   .home-page__ticket-number-description {

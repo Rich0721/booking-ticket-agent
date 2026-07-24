@@ -21,9 +21,9 @@
 ### Requirement - Checkbox實作
 
 - 分支名稱: feature_checkbox_component
-- 需求說明: 
-    - 請根據**需求文件**說明完成實作該Component即可，其餘請不要實作，並且通過Pages顯示實作結果
-    - 調整: 點選Check box會有閃爍的情況，而且需要點兩次才會顯示打勾情況，請修正此問題
+- 需求說明:
+  - 請根據**需求文件**說明完成實作該Component即可，其餘請不要實作，並且通過Pages顯示實作結果
+  - 調整: 點選Check box會有閃爍的情況，而且需要點兩次才會顯示打勾情況，請修正此問題
 - 需求參考資料: [需求文件](./requirements/Checkbox_Component.md)
 - 完成開發: 2026-07-22
 - PM確認:
@@ -41,7 +41,7 @@
 - 分支名稱: feature_selection_component
 - 需求說明: 請根據**需求文件**說明完成實作該Component即可，其餘請不要實作，並且通過Pages顯示實作結果
 - 需求參考資料: [需求文件](./requirements/Selection_Component.md)
-- 完成開發:
+- 完成開發: 2026-07-23
 - PM確認:
 
 ### Requirement - Home Page 實作
