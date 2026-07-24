@@ -4,6 +4,7 @@ export { default as DatePicker } from "./DatePicker/DatePicker";
 export { default as Checkbox } from "./Checkbox/Checkbox";
 export { default as TicketNumber } from "./TicketNumber/TicketNumber";
 export { default as Selection } from "./Selection/Selection";
+export { default as Button } from "./Button/Button";
 export type { IIDNumberInputProps } from "../interfaces/IIDNumberInput";
 export type { IDatePickerProps } from "../interfaces/IDatePicker";
 export type { ICheckboxProps, CheckboxOption } from "../interfaces/ICheckbox";
@@ -12,3 +13,4 @@ export type {
   ISelectionProps,
   ISelectionOption,
 } from "../interfaces/ISelection";
+export type { IButtonProps, ButtonSize } from "../interfaces/IButton";
