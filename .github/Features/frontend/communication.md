@@ -53,3 +53,27 @@
 - 需求參考資料: [需求文件](./requirements/Home_Page.md)
 - 完成開發: 2026-07-22
 - PM確認:
+
+### Requirement - Button Component 實作
+
+- 分支名稱: feature_button_component
+- 需求說明: 請根據**需求文件**說明完成實作該Component即可，其餘請不要實作，並且通過Pages顯示實作結果
+- 需求參考資料: [需求文件](./requirements/Button_Component.md)
+- 完成開發:
+- PM確認:
+
+### Requirement - Hint Component 實作
+
+- 分支名稱: feature_hint_component
+- 需求說明: 請根據**需求文件**說明完成實作該Component即可，其餘請不要實作，並且通過Pages顯示實作結果
+- 需求參考資料: [需求文件](./requirements/Hint_Component.md)
+- 完成開發:
+- PM確認:
+
+### Requirement - Booking THSR Page 實作
+
+- 分支名稱: feature_booking_thsr_page
+- 需求說明: 請根據**需求文件**說明完成實作，並讓使用者切換至"THSR"可以正常進行預約訂票
+- 需求參考資料: [需求文件](./requirements/Booking_THSR.md)
+- 完成開發:
+- PM確認:
