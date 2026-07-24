@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Checkbox from "../components/Checkbox/Checkbox";
 import TicketNumber from "../components/TicketNumber/TicketNumber";
 import Selection from "../components/Selection/Selection";
+import Button from "../components/Button/Button";
 import "./home-page.css";
 
 type NavKey = "home" | "thsr" | "tra" | "search";
@@ -11,6 +12,7 @@ const HomePage: React.FC = () => {
   const [selectedTicketTags, setSelectedTicketTags] = useState<string>("");
   const [ticketCount, setTicketCount] = useState<number>(0);
   const [selectedStation, setSelectedStation] = useState<string>("");
+  const [buttonClickCount, setButtonClickCount] = useState<number>(0);
 
   const renderContent = () => {
     if (activeSection === "home") {
@@ -127,6 +129,28 @@ const HomePage: React.FC = () => {
               data-testid="selection-result"
             >
               目前回傳值: {selectedStation}
+            </p>
+          </div>
+
+          <div className="home-page__button-demo">
+            <h2 className="home-page__button-demo-title">
+              Button Component 展示
+            </h2>
+            <p className="home-page__button-demo-description">
+              點選按鈕會觸發OnClick事件並累加點選次數。
+            </p>
+
+            <Button
+              title="送出"
+              icon="/icons/checked.png"
+              onClick={() => setButtonClickCount((count) => count + 1)}
+            />
+
+            <p
+              className="home-page__button-demo-result"
+              data-testid="button-result"
+            >
+              目前點選次數: {buttonClickCount}
             </p>
           </div>
         </div>

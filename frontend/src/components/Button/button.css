@@ -1,0 +1,57 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: "Kalam", cursive;
+  transition: background-color 0.2s ease;
+  box-sizing: border-box;
+  padding: 0 16px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.button--small {
+  height: 30px;
+  font-size: 12px;
+}
+
+.button--medium {
+  height: 40px;
+  font-size: 14px;
+}
+
+.button--large {
+  height: 50px;
+  font-size: 16px;
+}
+
+.button__icon {
+  width: 1.2em;
+  height: 1.2em;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.button__title {
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .button--large {
+    height: 44px;
+    font-size: 15px;
+  }
+
+  .button--medium {
+    height: 38px;
+    font-size: 13px;
+  }
+}
