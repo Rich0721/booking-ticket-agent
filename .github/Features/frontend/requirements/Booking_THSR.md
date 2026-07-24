@@ -93,6 +93,24 @@
       - 使用[ID Component](../requirements/ID_Component.md)
       - Title: 早鳥1(1~10根據成人票數量顯示)
     - JsonKey: early_ids，為陣列格式，依序放入早鳥ID的值
+  - 清空填寫按鈕
+    - 使用[Button Component](../requirements/Button_Component.md)
+    - Title: 清空填寫
+    - Icon: 使用**public/icons/school.png**
+    - ButtonColor: #FFCCCC
+    - SelectedColor: #f73f3f
+    - ButtonSize: medium
+    - OnClick事件: 清空所有欄位的值，並且將所有的欄位回復到預設值
+  - 預約訂票按鈕
+    - 使用[Button Component](../requirements/Button_Component.md)
+    - Title: 預約訂票
+    - Icon: 使用**public/icons/booking.png**
+    - ButtonColor: #a7fdb9
+    - SelectedColor: #59fa59
+    - ButtonSize: medium
+    - OnClick事件: 進行欄位檢查，是否正確
+      - 若有欄位未填寫或是有錯誤，則跳出錯誤提示窗顯示"相關欄位未填寫或有誤，請確認"
+      - 若所有欄位皆正確，則跳出確認視窗顯示"請確認是否要進行預約訂票"，並且顯示所有的欄位值，若使用者按下**確認**，則將所有欄位值依照API格式進行POST送出，若使用者按下**取消**，則關閉視窗並保留輸入狀態
 
 ### III. 前端顯示畫面
 
