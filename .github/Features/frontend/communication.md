@@ -65,7 +65,7 @@
 ### Requirement - Hint Component 實作
 
 - 分支名稱: feature_hint_component
-- 需求說明: 請根據**需求文件**說明完成實作該Component即可，其餘請不要實作，並且通過Pages顯示實作結果
+- 需求說明: 請根據**需求文件**說明完成實作該Component即可，其餘請不要實作，於Pages測試方法**透過使用Button Component點擊後，顯示提示視窗進行測試確認**
 - 需求參考資料: [需求文件](./requirements/Hint_Component.md)
 - 完成開發:
 - PM確認:
