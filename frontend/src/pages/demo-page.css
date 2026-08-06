@@ -133,6 +133,13 @@
   font-weight: 500;
 }
 
+.demo-page__hint-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .demo-page {
