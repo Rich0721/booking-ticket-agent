@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "../components/DatePicker/DatePicker";
+import { Button, Hint } from "../components";
 import "./demo-page.css";
 
 /**
@@ -8,6 +9,8 @@ import "./demo-page.css";
 const DemoPage: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const [submittedValue, setSubmittedValue] = useState<string>("");
+  const [showInfoHint, setShowInfoHint] = useState<boolean>(false);
+  const [showWarningHint, setShowWarningHint] = useState<boolean>(false);
 
   const handleChange = (value: string) => {
     setInputValue(value);
@@ -20,6 +23,22 @@ const DemoPage: React.FC = () => {
     } else {
       alert("請選擇搭乘日期");
     }
+  };
+
+  const handleShowInfoHint = () => {
+    setShowInfoHint(true);
+  };
+
+  const handleShowWarningHint = () => {
+    setShowWarningHint(true);
+  };
+
+  const handleCloseInfoHint = () => {
+    setShowInfoHint(false);
+  };
+
+  const handleCloseWarningHint = () => {
+    setShowWarningHint(false);
   };
 
   return (
@@ -63,7 +82,41 @@ const DemoPage: React.FC = () => {
             </ul>
           </div>
         </div>
+
+        <div className="demo-page__section">
+          <h2 className="demo-page__subtitle">Hint Component 展示</h2>
+          <div className="demo-page__hint-buttons">
+            <Button
+              title="顯示提示訊息"
+              buttonColor="#007bff"
+              selectedColor="#0056b3"
+              buttonSize="medium"
+              onClick={handleShowInfoHint}
+            />
+            <Button
+              title="顯示警告訊息"
+              buttonColor="#ff6b6b"
+              selectedColor="#cc5555"
+              buttonSize="medium"
+              onClick={handleShowWarningHint}
+            />
+          </div>
+        </div>
       </div>
+
+      <Hint
+        title="這是一個提示訊息"
+        type="info"
+        onConfirm={handleCloseInfoHint}
+        isVisible={showInfoHint}
+      />
+
+      <Hint
+        title="相關欄位未填寫或有誤，請確認"
+        type="warning"
+        onConfirm={handleCloseWarningHint}
+        isVisible={showWarningHint}
+      />
     </div>
   );
 };
