@@ -15,8 +15,8 @@
     - 是否預設勾選: 可提供開發者設定checkbox的預設勾選狀態
   - 設定是否為必填
 - 排版格式請參考以下:
-    - 有Icon: [Checkbox] [選項文字] [Icon]
-    - 無Icon: [Checkbox] [選項文字]
+  - 有Icon: [Checkbox] [選項文字] [Icon]
+  - 無Icon: [Checkbox] [選項文字]
 - 開發錯誤檢測:
   - 所有選項的Icon需要一致性，需要全有或全無，若有一個選項有Icon，其他選項沒有Icon，則會拋出錯誤訊息，無法進行編譯
   - 所有選項的value值需要唯一，若有重複的value值，則會拋出錯誤訊息，無法進行編譯
@@ -26,11 +26,11 @@
     - 必填: 錯誤訊息"請至少勾選一個選項"，並且需要將選項標記為紅色，並且回傳空字串""
     - 不是必填:回傳空字串""
 
-### III. 前端顯示畫面
+## III. 前端顯示畫面
 
 ![CheckBox Component](../UI/Commons/components/Bird.png)
 
-### IV. React範例說明
+## IV. React範例說明
 
 ```jsx
 // Bird.jsx
@@ -67,7 +67,7 @@ function Bird({ checked = false, onChange }) {
 export default Bird;
 ```
 
-### V. CSS範例說明
+## V. CSS範例說明
 
 ```css
 /* Bird.css */

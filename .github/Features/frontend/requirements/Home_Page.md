@@ -28,11 +28,11 @@
       - Search: 先顯示**作業中..**
 - 操作情境: [情境說明](../scenarios/HomePage.feature)
 
-### III. 前端顯示畫面
+## III. 前端顯示畫面
 
 ![Home Page](../UI//HomePage.png)
 
-### IV. React範例說明
+## IV. React範例說明
 
 ```jsx
 // HomePage.jsx
@@ -103,7 +103,7 @@ function HomePage() {
 export default HomePage;
 ```
 
-### V. CSS範例說明
+## V. CSS範例說明
 
 ```css
 /* HomePage.css */

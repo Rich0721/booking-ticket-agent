@@ -70,6 +70,14 @@
 - 完成開發:
 - PM確認:
 
+### Requirement - Double Check Component 實作
+
+- 分支名稱: feature_double_check_component
+- 需求說明: 請根據**需求文件**說明完成實作該Component即可，其餘請不要實作，於Pages測試方法**透過使用Button Component點擊後，顯示提示視窗進行測試確認**
+- 需求參考資料: [需求文件](./requirements/Double_Check_Component.md)
+- 完成開發:
+- PM確認:
+
 ### Requirement - Booking THSR Page 實作
 
 - 分支名稱: feature_booking_thsr_page

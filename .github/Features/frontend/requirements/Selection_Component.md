@@ -19,11 +19,11 @@
     - 必填: 錯誤訊息"請至少選擇一個選項"，並且需要將下拉選單標記為紅色，並且回傳空字串""
     - 不是必填:回傳空字串""
 
-### III. 前端顯示畫面
+## III. 前端顯示畫面
 
 ![下拉選單 Component](../UI/Commons/components/Time.png)
 
-### IV. React範例說明
+## IV. React範例說明
 
 ```jsx
 // TimePicker.jsx
@@ -95,7 +95,7 @@ function TimePicker() {
 export default TimePicker;
 ```
 
-### V. CSS範例說明
+## V. CSS範例說明
 
 ```css
 /* TimePicker.css */

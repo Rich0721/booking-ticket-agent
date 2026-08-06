@@ -16,11 +16,11 @@
 - ErrorMessage: '日期不可為空，請重新選擇'
 - ErrorMessage顯示條件: 當Textbox失去焦點，且輸入值為空時，顯示ErrorMessage
 
-### III. 前端顯示畫面
+## III. 前端顯示畫面
 
 ![UI設計圖](../UI/Commons/components/Date.png)
 
-### IV. React範例說明
+## IV. React範例說明
 
 ```jsx
 // DatePicker.jsx
@@ -51,7 +51,7 @@ function DatePicker() {
 export default DatePicker;
 ```
 
-### V. CSS範例說明
+## V. CSS範例說明
 
 ```css
 /* DatePicker.css */
