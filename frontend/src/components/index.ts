@@ -6,6 +6,7 @@ export { default as TicketNumber } from "./TicketNumber/TicketNumber";
 export { default as Selection } from "./Selection/Selection";
 export { default as Button } from "./Button/Button";
 export { default as Hint } from "./Hint/Hint";
+export { default as DoubleCheck } from "./DoubleCheck/DoubleCheck";
 export type { IIDNumberInputProps } from "../interfaces/IIDNumberInput";
 export type { IDatePickerProps } from "../interfaces/IDatePicker";
 export type { ICheckboxProps, CheckboxOption } from "../interfaces/ICheckbox";
@@ -16,3 +17,7 @@ export type {
 } from "../interfaces/ISelection";
 export type { IButtonProps, ButtonSize } from "../interfaces/IButton";
 export type { IHintProps, HintType } from "../interfaces/IHint";
+export type {
+  IDoubleCheckProps,
+  BookingInfo,
+} from "../interfaces/IDoubleCheck";

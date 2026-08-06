@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "../components/DatePicker/DatePicker";
-import { Button, Hint } from "../components";
+import { Button, Hint, DoubleCheck, BookingInfo } from "../components";
 import "./demo-page.css";
 
 /**
@@ -11,6 +11,24 @@ const DemoPage: React.FC = () => {
   const [submittedValue, setSubmittedValue] = useState<string>("");
   const [showInfoHint, setShowInfoHint] = useState<boolean>(false);
   const [showWarningHint, setShowWarningHint] = useState<boolean>(false);
+  const [showDoubleCheck, setShowDoubleCheck] = useState<boolean>(false);
+
+  const mockBookingInfo: BookingInfo[] = [
+    { label: "訂票種類", value: "THSR", italic: true },
+    { label: "身份證字號", value: "A123456789", italic: true },
+    { label: "訂票邏輯", value: "早鳥優先" },
+    { label: "是否使用會員累積點數", value: "是" },
+    { label: "搭乘日期", value: "2026-07-17", italic: true },
+    { label: "搭乘時間", value: "15:00", italic: true },
+    { label: "搭乘起站", value: "南港" },
+    { label: "搭乘迄站", value: "左營" },
+    { label: "成人", value: "2" },
+    { label: "愛心", value: "0" },
+    { label: "敬老", value: "0" },
+    { label: "孩童", value: "0" },
+    { label: "大學生", value: "0" },
+    { label: "早鳥", value: "A123456789, B234567890", italic: true },
+  ];
 
   const handleChange = (value: string) => {
     setInputValue(value);
@@ -33,12 +51,25 @@ const DemoPage: React.FC = () => {
     setShowWarningHint(true);
   };
 
+  const handleShowDoubleCheck = () => {
+    setShowDoubleCheck(true);
+  };
+
   const handleCloseInfoHint = () => {
     setShowInfoHint(false);
   };
 
   const handleCloseWarningHint = () => {
     setShowWarningHint(false);
+  };
+
+  const handleCloseDoubleCheck = () => {
+    setShowDoubleCheck(false);
+  };
+
+  const handleConfirmBooking = () => {
+    alert("確認訂票已提交到後端");
+    setShowDoubleCheck(false);
   };
 
   return (
@@ -102,6 +133,19 @@ const DemoPage: React.FC = () => {
             />
           </div>
         </div>
+
+        <div className="demo-page__section">
+          <h2 className="demo-page__subtitle">Double Check Component 展示</h2>
+          <div className="demo-page__hint-buttons">
+            <Button
+              title="顯示確認訂票視窗"
+              buttonColor="#00cc88"
+              selectedColor="#00aa66"
+              buttonSize="medium"
+              onClick={handleShowDoubleCheck}
+            />
+          </div>
+        </div>
       </div>
 
       <Hint
@@ -116,6 +160,13 @@ const DemoPage: React.FC = () => {
         type="warning"
         onConfirm={handleCloseWarningHint}
         isVisible={showWarningHint}
+      />
+
+      <DoubleCheck
+        bookingInfo={mockBookingInfo}
+        onCancel={handleCloseDoubleCheck}
+        onConfirm={handleConfirmBooking}
+        isVisible={showDoubleCheck}
       />
     </div>
   );
