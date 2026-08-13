@@ -7,6 +7,7 @@
 ## 需求文件閱讀
 
 需求文件會根據前後端與爬蟲的不同需求進行拆分，相關文件都會放在.github/Features資料夾下，以下架構著重說明Features資料夾結構，並非完整資料夾結構，完整資料夾結構請參考-**專案資料夾結構**
+'''text
 .github
 └── Features
 | ├── backend # 後端需求文件
@@ -24,6 +25,7 @@
 | | ├── scenarios # 功能情境說明文件，須根據requirements引用參考
 | | ├── workflows # 功能工作流程說明文件，須根據requirements引用參考
 | | └── communication.md # 與AI Agent溝通的情境說明文件
+'''
 
 ### Requirements文件導讀
 
@@ -89,6 +91,7 @@ communication.md文件是由PM與AI Agent進行溝通的文件，AI請保留前�
 
 ## 專案資料夾結構
 
+'''text
 Booking-Ticket-Agent/
 ├── .github/ # GitHub Copilot與需求設定
 | ├── agents/ # GitHub Agents設定
@@ -147,6 +150,7 @@ Booking-Ticket-Agent/
 ├── docker-compose.yml # Docker Compose設定檔
 ├── .gitignore # Git忽略檔
 └── README.md # 專案說明文件
+'''
 
 ## Copilot指令
 
