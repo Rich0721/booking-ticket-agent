@@ -1,4 +1,4 @@
-Feature: 使用者選擇THSR訂票
+Feature: 使用者在THSR頁面進行預約訂票
 
   Rule: 使用者輸入訂票者身份證字號
     Example: 使用者輸入錯誤的身份證字號
