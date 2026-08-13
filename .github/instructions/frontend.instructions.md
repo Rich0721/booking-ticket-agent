@@ -43,6 +43,7 @@ applyTo: "frontend/**/*.ts, frontend/**/*.tsx"
 
 ## 6. 後端資料夾結構
 
+```text
 booking-ticket-agent/
 ├── frontend/ # 前端程式碼
 | ├── node_modules/ # npm套件
@@ -68,3 +69,4 @@ booking-ticket-agent/
 | | ├── utils/ # 工具函式
 | | ├── App.tsx # 主程式
 | | └── index.tsx # 入口程式
+```

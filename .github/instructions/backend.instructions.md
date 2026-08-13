@@ -82,6 +82,7 @@ applyTo: "backend/**/*.py"
 
 ## 5. 後端資料夾結構
 
+```text
 booking-ticket-agent/
 ├── backend/ # 後端程式碼
 | ├── requirements.txt # 套件需求檔
@@ -100,3 +101,4 @@ booking-ticket-agent/
 | | └── main.py # FastApi啟動程式碼
 | └── tests/ # 單元測試程式碼
 | └── scenarios # 單元測試單一情境，不同的測資
+```
