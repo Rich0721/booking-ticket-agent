@@ -331,24 +331,11 @@ export const BookingTHSRPage: React.FC = () => {
 
   return (
     <div className="page">
-      {/* Header: 上藍下橘雙色條 */}
-      <div className="header-blue"></div>
-      <div className="header-orange">
-        <h1>Auto-Booking</h1>
-        <nav>
-          <a href="#thsr" className="active">
-            THSR
-          </a>
-          <a href="#tra">TRA</a>
-          <a href="#search">Search</a>
-        </nav>
-      </div>
-
       {/* 主區：左側地圖 + 右側表單 */}
       <div className="main">
-        {/* 左側：台灣地圖佔位 */}
+        {/* 左側：台灣地圖 */}
         <div className="sidebar">
-          <div className="map-placeholder">THSR</div>
+          <img src="/images/taiwan.png" alt="Taiwan map" />
         </div>
 
         {/* 右側：訂票表單 */}
