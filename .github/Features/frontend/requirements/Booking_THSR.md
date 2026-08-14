@@ -21,6 +21,13 @@
     - 預設不勾選
     - 非必填欄位
     - JsonKey: is_member
+  - 早鳥優先:
+    - 使用[CheckBox Component](../requirements/Checkbox_Component.md)
+    - Title: 早鳥優先
+    - Icon: 使用**public/icons/early.png**
+    - 預設不勾選
+    - 非必填欄位
+    - JsonKey: is_early_bird
   - 搭乘日期:
     - 使用[Date Component](../requirements/Date_Component.md)
     - Title: 搭乘日期
