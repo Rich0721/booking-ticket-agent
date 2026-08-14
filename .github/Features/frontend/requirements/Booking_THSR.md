@@ -24,7 +24,7 @@
   - 早鳥優先:
     - 使用[CheckBox Component](../requirements/Checkbox_Component.md)
     - Title: 早鳥優先
-    - Icon: 使用**public/icons/early.png**
+    - Icon: 使用**public/icons/bird.png**
     - 預設不勾選
     - 非必填欄位
     - JsonKey: is_early_bird
@@ -111,7 +111,7 @@
   - 預約訂票按鈕
     - 使用[Button Component](../requirements/Button_Component.md)
     - Title: 預約訂票
-    - Icon: 使用**public/icons/booking.png**
+    - Icon: 使用**public/icons/checked.png**
     - ButtonColor: #a7fdb9
     - SelectedColor: #59fa59
     - ButtonSize: medium
