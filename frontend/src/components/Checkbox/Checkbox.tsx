@@ -60,7 +60,7 @@ const Checkbox = <T extends readonly CheckboxOption[]>({
   useEffect(() => {
     setSelectedValues(getInitialSelectedValues(options));
     setHasInteracted(false);
-  }, [optionsSignature]);
+  }, [optionsSignature, options]);
 
   const hasIcon = useMemo(() => hasIconInAllOptions(options), [options]);
 
