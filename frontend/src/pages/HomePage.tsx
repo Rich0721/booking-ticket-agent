@@ -3,6 +3,7 @@ import Checkbox from "../components/Checkbox/Checkbox";
 import TicketNumber from "../components/TicketNumber/TicketNumber";
 import Selection from "../components/Selection/Selection";
 import Button from "../components/Button/Button";
+import BookingTHSRPage from "./BookingTHSRPage";
 import "./home-page.css";
 
 type NavKey = "home" | "thsr" | "tra" | "search";
@@ -38,6 +39,10 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       );
+    }
+
+    if (activeSection === "thsr") {
+      return <BookingTHSRPage />;
     }
 
     if (activeSection === "search") {
