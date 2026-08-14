@@ -289,7 +289,7 @@ describe("BookingTHSRPage", () => {
       // Then: 所有欄位回復到預設值
       expect(idInput).toHaveValue("");
       expect(dateInput).toHaveValue("");
-      expect(adultsInput).toHaveValue("1");
+      expect(adultsInput).toHaveValue(1);
     });
   });
 });
