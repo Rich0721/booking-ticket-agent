@@ -126,3 +126,329 @@
 
 ![高鐵預約訂票介面](../UI/THSR.png)
 ![二度確認視窗](../UI/Double_Check.png)
+
+### IV. HTML排版結構
+
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>THSR Auto-Booking Layout</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: sans-serif;
+        background: #f0f0f0;
+      }
+      .page {
+        width: 1440px;
+        min-height: 1024px;
+        background: #fff;
+        margin: 0 auto;
+      }
+
+      /* Header: 上藍下橘雙色條 */
+      .header-blue {
+        height: 60px;
+        background: #090980;
+      }
+      .header-orange {
+        height: 60px;
+        background: #db691d;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 28px;
+      }
+      .header-orange h1 {
+        color: #fff;
+        font-size: 40px;
+        font-weight: 400;
+      }
+      .header-orange nav {
+        display: flex;
+        gap: 24px;
+      }
+      .header-orange nav a {
+        color: #fff;
+        font-size: 24px;
+        text-decoration: none;
+      }
+      .header-orange nav a.active {
+        font-weight: 700;
+        text-decoration: underline;
+      }
+
+      /* 主區：左側地圖 + 右側表單 */
+      .main {
+        display: flex;
+      }
+      .sidebar {
+        width: 460px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .map-placeholder {
+        width: 300px;
+        height: 400px;
+        border: 2px dashed #999;
+        border-radius: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        font-weight: 700;
+        color: #333;
+      }
+      .form-area {
+        flex: 1;
+        padding: 20px 40px 20px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      /* 表單列 */
+      .row {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+      }
+      .field {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+      }
+      .field label {
+        font-size: 16px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      .field input,
+      .field select {
+        flex: 1;
+        height: 33px;
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        padding: 0 14px;
+        background: #f5f5f5;
+      }
+      .member-group {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .member-group button {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 6px 14px;
+        background: none;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      /* 票種列 */
+      .tickets {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        padding: 8px 0;
+      }
+      .ticket {
+        text-align: center;
+        min-width: 90px;
+      }
+      .ticket span {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .ticket input {
+        width: 60px;
+        height: 30px;
+        text-align: center;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+      }
+
+      /* 早鳥區 */
+      .early-bird {
+        border: 1px solid #ddd;
+        border-radius: 25px;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px 32px;
+      }
+      .eb-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .eb-row label {
+        font-weight: 700;
+        white-space: nowrap;
+        min-width: 50px;
+      }
+      .eb-row input {
+        flex: 1;
+        height: 33px;
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        padding: 0 14px;
+        background: #f5f5f5;
+      }
+
+      /* 底部按鈕 */
+      .actions {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 12px;
+      }
+      .actions button {
+        padding: 14px 48px;
+        border: none;
+        border-radius: 50px;
+        font-size: 20px;
+        cursor: pointer;
+        background: #3ee6c8;
+        min-width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- ===== Header（上藍下橘雙色條）===== -->
+      <div class="header-blue"></div>
+      <div class="header-orange">
+        <h1>Auto-Booking</h1>
+        <nav>
+          <a href="#" class="active">THSR</a>
+          <a href="#">TRA</a>
+          <a href="#">Search</a>
+        </nav>
+      </div>
+
+      <div class="main">
+        <!-- ===== 左側：台灣地圖佔位 ===== -->
+        <div class="sidebar">
+          <div class="map-placeholder">THSR</div>
+        </div>
+
+        <!-- ===== 右側：訂票表單 ===== -->
+        <div class="form-area">
+          <!-- 第一列：身份證字號 ＋ 會員/返回/早鳥 -->
+          <div class="row">
+            <div class="field" style="flex:1.5">
+              <label>👤 身份證字號</label>
+              <input type="text" placeholder="請輸入身份證字號" />
+            </div>
+            <div class="member-group">
+              <button>會員</button>
+              <button>返回</button>
+              <button>早鳥</button>
+            </div>
+          </div>
+
+          <!-- 第二列：搭乘日期 ＋ 搭乘時間 -->
+          <div class="row">
+            <div class="field">
+              <label>📅 搭乘日期</label>
+              <input type="date" />
+            </div>
+            <div class="field">
+              <label>🕐 搭乘時間</label>
+              <select>
+                <option>請選擇時間</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 第三列：搭乘起站 ＋ 搭乘迄站 -->
+          <div class="row">
+            <div class="field">
+              <label>🚉 搭乘起站</label>
+              <select>
+                <option>請選擇起站</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>🚉 搭乘迄站</label>
+              <select>
+                <option>請選擇迄站</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 票種選擇（5 種票） -->
+          <div class="tickets">
+            <div class="ticket">
+              <span>成人票 👤</span><input type="number" value="0" min="0" />
+            </div>
+            <div class="ticket">
+              <span>孩童票 👤</span><input type="number" value="0" min="0" />
+            </div>
+            <div class="ticket">
+              <span>敬老票 👤</span><input type="number" value="0" min="0" />
+            </div>
+            <div class="ticket">
+              <span>愛心票 👤</span><input type="number" value="0" min="0" />
+            </div>
+            <div class="ticket">
+              <span>學生票 👤</span><input type="number" value="0" min="0" />
+            </div>
+          </div>
+
+          <!-- 早鳥區（2 欄 × 5 列 = 10 格） -->
+          <div class="early-bird">
+            <div class="eb-row">
+              <label>👤 早鳥1</label><input type="text" />
+            </div>
+            <div class="eb-row">
+              <label>👤 早鳥2</label><input type="text" />
+            </div>
+            <div class="eb-row">
+              <label>👤 早鳥3</label><input type="text" />
+            </div>
+            <div class="eb-row">
+              <label>👤 早鳥4</label><input type="text" />
+            </div>
+            <div class="eb-row">
+              <label>👤 早鳥5</label><input type="text" />
+            </div>
+            <div class="eb-row">
+              <label>👤 早鳥6</label><input type="text" />
+            </div>
+            <div class="eb-row">
+              <label>👤 早鳥7</label><input type="text" />
+            </div>
+            <div class="eb-row">
+              <label>👤 早鳥8</label><input type="text" />
+            </div>
+            <div class="eb-row">
+              <label>👤 早鳥9</label><input type="text" />
+            </div>
+            <div class="eb-row">
+              <label>👤 早鳥10</label><input type="text" />
+            </div>
+          </div>
+
+          <!-- 底部按鈕 -->
+          <div class="actions">
+            <button>清空填寫</button>
+            <button>預約訂票</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+```
