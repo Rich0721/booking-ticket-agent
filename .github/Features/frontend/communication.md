@@ -83,5 +83,5 @@
 - 分支名稱: feature_booking_thsr_page
 - 需求說明: 請根據**需求文件**說明完成實作，並讓使用者切換至"THSR"可以正常進行預約訂票
 - 需求參考資料: [需求文件](./requirements/Booking_THSR.md)
-- 完成開發:
+- 完成開發: 2026-08-14
 - PM確認:
