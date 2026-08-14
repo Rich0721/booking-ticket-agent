@@ -14,6 +14,7 @@ import "./booking-thsr-page.css";
 interface BookingFormData {
   user_id: string;
   is_member: boolean;
+  is_early_bird: boolean;
   booking_date: string;
   booking_time: string;
   start_station: string;
@@ -31,14 +32,11 @@ interface ValidationError {
   message: string;
 }
 
-interface FieldErrors {
-  [key: string]: boolean;
-}
-
 export const BookingTHSRPage: React.FC = () => {
   const [formData, setFormData] = useState<BookingFormData>({
     user_id: "",
     is_member: false,
+    is_early_bird: false,
     booking_date: "",
     booking_time: "",
     start_station: "",
@@ -51,7 +49,6 @@ export const BookingTHSRPage: React.FC = () => {
     early_ids: [],
   });
 
-  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [hintVisible, setHintVisible] = useState(false);
   const [hintMessage, setHintMessage] = useState("");
   const [doubleCheckVisible, setDoubleCheckVisible] = useState(false);
@@ -97,35 +94,28 @@ export const BookingTHSRPage: React.FC = () => {
   // 驗證表單
   const validateForm = (): ValidationError[] => {
     const errors: ValidationError[] = [];
-    const errorFields: FieldErrors = {};
 
     // 檢查必填字段
     if (!formData.user_id) {
       errors.push({ field: "user_id", message: "請輸入訂票者身份證字號" });
-      errorFields.user_id = true;
     } else if (!validateIdNumber(formData.user_id)) {
       errors.push({ field: "user_id", message: "請輸入正確的身份證字號" });
-      errorFields.user_id = true;
     }
 
     if (!formData.booking_date) {
       errors.push({ field: "booking_date", message: "請選擇搭乘日期" });
-      errorFields.booking_date = true;
     }
 
     if (!formData.booking_time) {
       errors.push({ field: "booking_time", message: "請選擇搭乘時間" });
-      errorFields.booking_time = true;
     }
 
     if (!formData.start_station) {
       errors.push({ field: "start_station", message: "請選擇搭乘起站" });
-      errorFields.start_station = true;
     }
 
     if (!formData.end_station) {
       errors.push({ field: "end_station", message: "請選擇搭乘迄站" });
-      errorFields.end_station = true;
     }
 
     // 檢查起迄站是否相同
@@ -135,8 +125,6 @@ export const BookingTHSRPage: React.FC = () => {
       formData.start_station === formData.end_station
     ) {
       errors.push({ field: "stations", message: "請選擇不同的起迄站" });
-      errorFields.start_station = true;
-      errorFields.end_station = true;
     }
 
     // 檢查票券總數
@@ -148,11 +136,6 @@ export const BookingTHSRPage: React.FC = () => {
       formData.students;
     if (totalTickets > 10) {
       errors.push({ field: "tickets", message: "單一訂單最多可訂購10張" });
-      errorFields.adults = true;
-      errorFields.childs = true;
-      errorFields.elders = true;
-      errorFields.disables = true;
-      errorFields.students = true;
     }
 
     // 檢查是否有任何訂票資訊
@@ -166,9 +149,6 @@ export const BookingTHSRPage: React.FC = () => {
       const earlyBirdCount = getEarlyBirdCount();
       if (formData.early_ids.length < earlyBirdCount) {
         errors.push({ field: "early_ids", message: "請填寫所有早鳥ID" });
-        for (let i = 0; i < earlyBirdCount; i++) {
-          errorFields[`early_id_${i}`] = true;
-        }
       }
 
       // 檢查早鳥ID格式
@@ -179,7 +159,6 @@ export const BookingTHSRPage: React.FC = () => {
             field: `early_id_${i}`,
             message: "請輸入正確的身份證字號",
           });
-          errorFields[`early_id_${i}`] = true;
         }
       }
 
@@ -187,13 +166,9 @@ export const BookingTHSRPage: React.FC = () => {
       const uniqueEarlyIds = new Set(formData.early_ids);
       if (uniqueEarlyIds.size !== formData.early_ids.length) {
         errors.push({ field: "early_ids", message: "早鳥ID不可重複" });
-        formData.early_ids.forEach((_, i) => {
-          errorFields[`early_id_${i}`] = true;
-        });
       }
     }
 
-    setFieldErrors(errorFields);
     return errors;
   };
 
@@ -221,13 +196,6 @@ export const BookingTHSRPage: React.FC = () => {
         }
       }
 
-      // 清除該字段的錯誤標記
-      setFieldErrors((prev) => {
-        const updated = { ...prev };
-        delete updated[field as string];
-        return updated;
-      });
-
       return updated;
     });
   };
@@ -244,6 +212,7 @@ export const BookingTHSRPage: React.FC = () => {
     setFormData({
       user_id: "",
       is_member: false,
+      is_early_bird: false,
       booking_date: "",
       booking_time: "",
       start_station: "",
@@ -255,7 +224,6 @@ export const BookingTHSRPage: React.FC = () => {
       students: 0,
       early_ids: [],
     });
-    setFieldErrors({});
     setHintVisible(false);
     setDoubleCheckVisible(false);
   };
@@ -362,80 +330,111 @@ export const BookingTHSRPage: React.FC = () => {
   };
 
   return (
-    <div className="booking-thsr-page">
-      <div className="booking-form-container">
-        <h1>高鐵預約訂票</h1>
+    <div className="page">
+      {/* Header: 上藍下橘雙色條 */}
+      <div className="header-blue"></div>
+      <div className="header-orange">
+        <h1>Auto-Booking</h1>
+        <nav>
+          <a href="#thsr" className="active">
+            THSR
+          </a>
+          <a href="#tra">TRA</a>
+          <a href="#search">Search</a>
+        </nav>
+      </div>
 
-        <div className="form-section">
-          <IDNumberInput
-            title="訂票者身份證字號"
-            value={formData.user_id}
-            onChange={(value) => handleFieldChange("user_id", value)}
-            onBlur={() => {}}
-          />
-          {fieldErrors.user_id && <div className="error-indicator" />}
+      {/* 主區：左側地圖 + 右側表單 */}
+      <div className="main">
+        {/* 左側：台灣地圖佔位 */}
+        <div className="sidebar">
+          <div className="map-placeholder">THSR</div>
         </div>
 
-        <div className="form-section">
-          <Checkbox
-            options={[
-              {
-                label: "使用高鐵會員",
-                value: "member",
-                defaultChecked: false,
-                icon: "/icons/membership.png",
-              },
-            ]}
-            onChange={(selected) =>
-              handleFieldChange("is_member", selected.includes("member"))
-            }
-          />
-        </div>
-
-        <div className="form-section">
-          <DatePicker
-            title="搭乘日期"
-            value={formData.booking_date}
-            onChange={(value) => handleFieldChange("booking_date", value)}
-          />
-          {fieldErrors.booking_date && <div className="error-indicator" />}
-        </div>
-
-        <div className="form-section">
-          <Selection
-            title="搭乘時間"
-            iconSrc="/icons/clock.png"
-            parmCategory="THSR_TIME"
-            onChange={(value) => handleFieldChange("booking_time", value)}
-          />
-          {fieldErrors.booking_time && <div className="error-indicator" />}
-        </div>
-
-        <div className="form-row">
-          <div className="form-section">
-            <Selection
-              title="搭乘起站"
-              iconSrc="/icons/transport.png"
-              parmCategory="THSR_STATION"
-              onChange={(value) => handleFieldChange("start_station", value)}
-            />
-            {fieldErrors.start_station && <div className="error-indicator" />}
+        {/* 右側：訂票表單 */}
+        <div className="form-area">
+          {/* 第一列：身份證字號 ＋ 會員/早鳥 */}
+          <div className="row">
+            <div className="field" style={{ flex: "1.5" }}>
+              <IDNumberInput
+                title="訂票者身份證字號"
+                value={formData.user_id}
+                onChange={(value) => handleFieldChange("user_id", value)}
+                onBlur={() => {}}
+              />
+            </div>
+            <div className="member-group">
+              <Checkbox
+                options={[
+                  {
+                    label: "會員",
+                    value: "member",
+                    defaultChecked: formData.is_member,
+                    icon: "/icons/membership.png",
+                  },
+                ]}
+                onChange={(selected) =>
+                  handleFieldChange("is_member", selected.includes("member"))
+                }
+              />
+              <Checkbox
+                options={[
+                  {
+                    label: "早鳥",
+                    value: "early",
+                    defaultChecked: formData.is_early_bird,
+                  },
+                ]}
+                onChange={(selected) =>
+                  handleFieldChange("is_early_bird", selected.includes("early"))
+                }
+              />
+            </div>
           </div>
-          <div className="form-section">
-            <Selection
-              title="搭乘迄站"
-              iconSrc="/icons/transport.png"
-              parmCategory="THSR_STATION"
-              onChange={(value) => handleFieldChange("end_station", value)}
-            />
-            {fieldErrors.end_station && <div className="error-indicator" />}
-          </div>
-        </div>
 
-        <div className="ticket-section">
-          <h3>購買票券數量</h3>
-          <div className="ticket-grid">
-            <div className="ticket-item">
+          {/* 第二列：搭乘日期 ＋ 搭乘時間 */}
+          <div className="row">
+            <div className="field">
+              <DatePicker
+                title="搭乘日期"
+                value={formData.booking_date}
+                onChange={(value) => handleFieldChange("booking_date", value)}
+              />
+            </div>
+            <div className="field">
+              <Selection
+                title="搭乘時間"
+                iconSrc="/icons/clock.png"
+                parmCategory="THSR_TIME"
+                onChange={(value) => handleFieldChange("booking_time", value)}
+              />
+            </div>
+          </div>
+
+          {/* 第三列：搭乘起站 ＋ 搭乘迄站 */}
+          <div className="row">
+            <div className="field">
+              <Selection
+                title="搭乘起站"
+                iconSrc="/icons/transport.png"
+                parmCategory="THSR_STATION"
+                onChange={(value) => handleFieldChange("start_station", value)}
+              />
+            </div>
+            <div className="field">
+              <Selection
+                title="搭乘迄站"
+                iconSrc="/icons/transport.png"
+                parmCategory="THSR_STATION"
+                onChange={(value) => handleFieldChange("end_station", value)}
+              />
+            </div>
+          </div>
+
+          {/* 票種選擇（5 種票） */}
+          <div className="tickets">
+            <div className="ticket">
+              <span>成人票</span>
               <TicketNumber
                 title="成人票"
                 iconSrc="/icons/people.png"
@@ -444,9 +443,9 @@ export const BookingTHSRPage: React.FC = () => {
                 value={formData.adults}
                 onChange={(value) => handleFieldChange("adults", value)}
               />
-              {fieldErrors.adults && <div className="error-indicator" />}
             </div>
-            <div className="ticket-item">
+            <div className="ticket">
+              <span>兒童票</span>
               <TicketNumber
                 title="兒童票"
                 iconSrc="/icons/children.png"
@@ -455,9 +454,9 @@ export const BookingTHSRPage: React.FC = () => {
                 value={formData.childs}
                 onChange={(value) => handleFieldChange("childs", value)}
               />
-              {fieldErrors.childs && <div className="error-indicator" />}
             </div>
-            <div className="ticket-item">
+            <div className="ticket">
+              <span>敬老票</span>
               <TicketNumber
                 title="敬老票"
                 iconSrc="/icons/elderly.png"
@@ -466,9 +465,9 @@ export const BookingTHSRPage: React.FC = () => {
                 value={formData.elders}
                 onChange={(value) => handleFieldChange("elders", value)}
               />
-              {fieldErrors.elders && <div className="error-indicator" />}
             </div>
-            <div className="ticket-item">
+            <div className="ticket">
+              <span>愛心票</span>
               <TicketNumber
                 title="愛心票"
                 iconSrc="/icons/disabled.png"
@@ -477,9 +476,9 @@ export const BookingTHSRPage: React.FC = () => {
                 value={formData.disables}
                 onChange={(value) => handleFieldChange("disables", value)}
               />
-              {fieldErrors.disables && <div className="error-indicator" />}
             </div>
-            <div className="ticket-item">
+            <div className="ticket">
+              <span>學生票</span>
               <TicketNumber
                 title="學生票"
                 iconSrc="/icons/students.png"
@@ -488,48 +487,45 @@ export const BookingTHSRPage: React.FC = () => {
                 value={formData.students}
                 onChange={(value) => handleFieldChange("students", value)}
               />
-              {fieldErrors.students && <div className="error-indicator" />}
             </div>
           </div>
-        </div>
 
-        {shouldShowEarlyBirdIds() && (
-          <div className="early-bird-section">
-            <h3>購買早鳥票</h3>
-            <div className="early-bird-grid">
+          {/* 早鳥區（2 欄 × n 列） */}
+          {shouldShowEarlyBirdIds() && (
+            <div className="early-bird">
               {Array.from({ length: getEarlyBirdCount() }).map((_, index) => (
-                <div key={`early_id_${index}`} className="early-bird-item">
+                <div key={`early_id_${index}`} className="eb-row">
+                  <label>早鳥{index + 1}</label>
                   <IDNumberInput
                     title={`早鳥${index + 1}`}
                     value={formData.early_ids[index] || ""}
                     onChange={(value) => handleEarlyIdChange(index, value)}
+                    onBlur={() => {}}
                   />
-                  {fieldErrors[`early_id_${index}`] && (
-                    <div className="error-indicator" />
-                  )}
                 </div>
               ))}
             </div>
-          </div>
-        )}
+          )}
 
-        <div className="button-section">
-          <Button
-            title="清空填寫"
-            icon="/icons/school.png"
-            buttonColor="#FFCCCC"
-            selectedColor="#f73f3f"
-            buttonSize="medium"
-            onClick={handleClearForm}
-          />
-          <Button
-            title="預約訂票"
-            icon="/icons/booking.png"
-            buttonColor="#a7fdb9"
-            selectedColor="#59fa59"
-            buttonSize="medium"
-            onClick={handleBooking}
-          />
+          {/* 底部按鈕 */}
+          <div className="actions">
+            <Button
+              title="清空填寫"
+              icon="/icons/school.png"
+              buttonColor="#FFCCCC"
+              selectedColor="#f73f3f"
+              buttonSize="medium"
+              onClick={handleClearForm}
+            />
+            <Button
+              title="預約訂票"
+              icon="/icons/booking.png"
+              buttonColor="#a7fdb9"
+              selectedColor="#59fa59"
+              buttonSize="medium"
+              onClick={handleBooking}
+            />
+          </div>
         </div>
       </div>
 
