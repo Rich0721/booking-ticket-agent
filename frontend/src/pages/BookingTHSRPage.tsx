@@ -342,7 +342,7 @@ export const BookingTHSRPage: React.FC = () => {
         <div className="form-area">
           {/* 第一列：身份證字號 ＋ 會員/早鳥 */}
           <div className="row">
-            <div className="field" style={{ flex: "1.5" }}>
+            <div className="field" style={{ flex: "1" }}>
               <IDNumberInput
                 title="訂票者身份證字號"
                 value={formData.user_id}
@@ -350,7 +350,7 @@ export const BookingTHSRPage: React.FC = () => {
                 onBlur={() => {}}
               />
             </div>
-            <div className="member-group">
+            <div className="member-group" style={{ flex: "1" }}>
               <Checkbox
                 options={[
                   {

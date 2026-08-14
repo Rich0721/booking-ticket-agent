@@ -80,8 +80,10 @@ body {
 
 .member-group {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
+  justify-content: space-evenly;
+  flex: 1;
 }
 
 .member-group button {
@@ -154,7 +156,8 @@ body {
 /* 底部按鈕 */
 .actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 40px;
   padding-top: 12px;
 }
 
