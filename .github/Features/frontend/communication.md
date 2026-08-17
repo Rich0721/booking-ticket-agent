@@ -91,3 +91,15 @@
 - 需求參考資料: [需求文件](./requirements/Booking_THSR.md)
 - 完成開發: 2026-08-14
 - PM確認:
+
+### Requirement - Refactor Component CSS
+
+- 分支名稱: feature_refactor_booking_thsr_page
+- 需求說明: 請根據下列說明完成Booking THSR Page的重構
+  - 請先參考**Booking THSR Page**所使用的Component，確認跑版原因
+  - 確認相關Component的字體大小、間距，需進行統一規格，不能有大小不一或間距不一的情況
+  - 請調整對應至統一個CSS檔案內，除非有特殊要求，否則請不要在Component內自行調整CSS樣式
+  - 僅可以調整CSS樣式，React架構、Typescript程式碼不可進行調整
+- 需求文件: 請參考[Booking THSR Page](./requirements/Booking_THSR.md)所使用到的Component
+- 完成開發:
+- PM確認:
