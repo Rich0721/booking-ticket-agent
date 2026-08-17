@@ -18,7 +18,7 @@ class DatabaseConfig:
     資料庫通用配置
     """
     def __init__(self):
-        self.host = os.getenv("DB_HOST", "localhost")
+        self.host = os.getenv("DB_HOST", "booking-agent-db")
         self.port = os.getenv("DB_PORT", "5432")  # PostgreSQL預設埠
         self.user = os.getenv("DB_USER", "postgres")
         self.password = os.getenv("DB_PASSWORD", "postgres")
