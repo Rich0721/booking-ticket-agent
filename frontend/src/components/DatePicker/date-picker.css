@@ -1,84 +1,41 @@
 .date-picker-container {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 1rem;
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 1rem;
-  box-sizing: border-box;
+  /* Styles managed by parent page CSS */
 }
 
 .date-picker__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 2rem;
-  height: 2rem;
-  margin-top: 0.5rem;
+  /* Styles managed by parent page CSS */
 }
 
 .date-picker__icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  /* Styles managed by parent page CSS */
 }
 
 .date-picker__content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.5rem;
-  flex: 1;
-  flex-wrap: wrap;
+  /* Styles managed by parent page CSS */
 }
 
 .date-picker__title {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #333;
-  text-align: center;
-  margin: 0;
-  line-height: 1.4;
-  flex: 0 0 auto;
-  white-space: nowrap;
+  /* Styles managed by parent page CSS */
 }
 
 .date-picker__textbox {
-  flex: 1;
-  min-width: 150px;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
-  font-family: inherit;
+  /* Styles managed by parent page CSS */
 }
 
 .date-picker__textbox:focus {
-  outline: none;
-  border-color: #0066cc;
-  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+  /* Styles managed by parent page CSS */
 }
 
 .date-picker__textbox--error {
-  border-color: #ff0000;
-  background-color: #fff5f5;
+  /* Styles managed by parent page CSS */
 }
 
 .date-picker__textbox--error:focus {
-  border-color: #ff0000;
-  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+  /* Styles managed by parent page CSS */
 }
 
 .date-picker__error-message {
-  color: #ff0000;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-  flex-basis: 100%;
+  /* Styles managed by parent page CSS */
 }
 
 @media (max-width: 768px) {
