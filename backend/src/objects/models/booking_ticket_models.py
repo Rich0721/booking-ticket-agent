@@ -48,3 +48,15 @@ class EarlyBird(Base):
     
     # 關聯關係
     booking = relationship("BookingTicket", back_populates="early_birds")
+
+
+class SystemParam(Base):
+    """系統參數表模型"""
+    __tablename__ = "TB_SYS_PARM"
+
+    parm_id = Column(Integer, primary_key=True, autoincrement=True)
+    parm_category = Column(String(50), nullable=False)
+    parm_name = Column(String(50), nullable=False)
+    parm_value = Column(String(255), nullable=False)
+    created_time = Column(DateTime, default=datetime.utcnow)
+    updated_time = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
