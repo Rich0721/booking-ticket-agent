@@ -82,6 +82,12 @@
 
 - 分支名稱: feature_booking_thsr_page
 - 需求說明: 請根據**需求文件**說明完成實作，並讓使用者切換至"THSR"可以正常進行預約訂票
+  - 請參考**HTML排版結構**重新完成高鐵預約訂票介面的設計
+  - **Header**不須實作，請參考**Home Page**的Header，可透過Header切換至"THSR"頁面
+  - 台灣圖片使用public/images/taiwan.png
+  - **訂票者身份證字號**、**會員**與**早鳥**相關比例需統一，不能有大小不一的情況
+  - **搭乘日期**、**搭乘時間**、**搭乘起站**與**搭乘迄站**相關Component大小需統一，不能有大小不一的情況
+  - Button Component之間距離需置中顯示
 - 需求參考資料: [需求文件](./requirements/Booking_THSR.md)
-- 完成開發:
+- 完成開發: 2026-08-14
 - PM確認:
