@@ -98,7 +98,7 @@ booking-ticket-agent/
 | | | | └── CUserInfo.py # 使用者資訊類別
 | | | └── enums/
 | | | └── EUserPermission.py # 使用者權限列舉
-| | └── main.py # FastApi啟動程式碼
-| └── tests/ # 單元測試程式碼
+| ├──tests/ # 單元測試程式碼
+| ├── main.py # FastApi啟動程式碼
 | └── scenarios # 單元測試單一情境，不同的測資
 ```
