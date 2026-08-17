@@ -1,8 +1,8 @@
-# 載入選單
+# 載入選單內容
 
 ## I. 需求簡介
 
-使用者在前端選擇特定選單項目時，系統需要載入對應的選單資料，並回傳給前端顯示。
+前端開發者會呼叫此API，並且透過**parm_category**參數傳遞需要查詢選內的條件，此API需至[Table](../../../../database/tables/TB_SYS_PARM.sql)進行查詢並回傳相關選項給前端。
 
 ## II. 流程圖
 
@@ -10,32 +10,10 @@ N/A
 
 ## III. 需求說明
 
-- 根據前端需求至單資料來源[TB_SYS_PARM](../../../../database/tables/TB_SYS_PARM.sql)進行查詢後，塞選條件為**PARM_CATEGORY**，將選單資料回傳給前端渲染
+- 前端會透過GET方式呼叫此API，並且透過**parm_category**參數傳遞需要查詢選內的條件
+- 固定查詢[Table](../../../../database/tables/TB_SYS_PARM.sql)內的**parm_category**欄位，並且回傳相關選項給前端
 
 ## IV. 其它說明
 
-- API-Name: /loading-selected?parm_category={parm_category}
+- API定義請參考[Selection API](../../api/Selection_API.md)
 - 共用定義由[非功能性需求](./Unfunctional.md)
-- Method: Get
-- Request body: 無
-- Response body
-  1. status code 根據一般定義
-  2. JSON Format
-  ```JSON
-      {
-          "info": {
-              "menu": [
-                {
-                    "id": 1,
-                    "parm_name": "首頁",
-                    "parm_value": "home"
-                },
-                {
-                    "id": 2,
-                    "parm_name": "訂票",
-                    "parm_value": "booking"
-                }
-              ]
-          }
-      }
-  ```

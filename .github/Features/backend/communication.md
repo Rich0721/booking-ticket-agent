@@ -59,3 +59,13 @@
     - Mock數據庫層正常運作
 
 - PM確認:
+
+### Requirement - 開發選項載入API
+
+- 分支名稱: feature_loading_selected_api
+- 需求說明:
+  - 開發選項載入API，前端會透過GET方式呼叫此API，並且透過**parm_category**參數傳遞需要查詢選內的條件
+  - 固定查詢[Table](../../../../database/tables/TB_SYS_PARM.sql)內的**parm_category**欄位，並且回傳相關選項給前端
+- 需求參考資料: [載入選單內容](./requirements/Loading_Selected.md)
+- 完成開發:
+- PM確認:
