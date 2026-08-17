@@ -101,5 +101,5 @@
   - 請調整對應至統一個CSS檔案內，除非有特殊要求，否則請不要在Component內自行調整CSS樣式
   - 僅可以調整CSS樣式，React架構、Typescript程式碼不可進行調整
 - 需求文件: 請參考[Booking THSR Page](./requirements/Booking_THSR.md)所使用到的Component
-- 完成開發:
+- 完成開發: 2026-08-17
 - PM確認:
