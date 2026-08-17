@@ -76,6 +76,7 @@ body {
   border-radius: 30px;
   padding: 0 14px;
   background: #f5f5f5;
+  font-size: 16px;
 }
 
 .member-group {
@@ -111,6 +112,7 @@ body {
 .ticket span {
   display: block;
   font-weight: 700;
+  font-size: 16px;
   margin-bottom: 4px;
 }
 
@@ -120,6 +122,7 @@ body {
   text-align: center;
   border: 1px solid #ccc;
   border-radius: 15px;
+  font-size: 16px;
 }
 
 /* 早鳥區 */
@@ -140,6 +143,7 @@ body {
 
 .eb-row label {
   font-weight: 700;
+  font-size: 16px;
   white-space: nowrap;
   min-width: 50px;
 }
@@ -151,6 +155,7 @@ body {
   border-radius: 30px;
   padding: 0 14px;
   background: #f5f5f5;
+  font-size: 16px;
 }
 
 /* 底部按鈕 */
@@ -177,4 +182,400 @@ body {
   height: 8px;
   background: red;
   border-radius: 50%;
+}
+
+/* ===== Component 統一樣式 ===== */
+
+/* ID Number Input Component */
+.id-number-input-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.id-number-input__icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.id-number-input__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.id-number-input__content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.id-number-input__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.id-number-input__textbox {
+  flex: 1;
+  height: 33px;
+  padding: 0 14px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  background: #f5f5f5;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+.id-number-input__textbox:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.id-number-input__textbox::placeholder {
+  color: #999;
+}
+
+.id-number-input__textbox--error {
+  border-color: #ff0000;
+  background-color: #fff5f5;
+}
+
+.id-number-input__textbox--error:focus {
+  border-color: #ff0000;
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+}
+
+.id-number-input__error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 4px;
+  display: none;
+}
+
+/* Checkbox Component */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0;
+}
+
+.checkbox-group__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  min-height: auto;
+}
+
+.checkbox-group__option--error {
+  border-color: #d24141;
+}
+
+.checkbox-group__input {
+  width: 20px;
+  height: 20px;
+  accent-color: #3a6ee8;
+  margin: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.checkbox-group__label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111111;
+  white-space: nowrap;
+}
+
+.checkbox-group__icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.checkbox-group__error-message {
+  color: #d24141;
+  font-size: 14px;
+  font-weight: 700;
+  display: none;
+}
+
+/* Date Picker Component */
+.date-picker-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.date-picker__icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.date-picker__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.date-picker__content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.date-picker__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.date-picker__textbox {
+  flex: 1;
+  height: 33px;
+  padding: 0 14px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  background: #f5f5f5;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+.date-picker__textbox:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.date-picker__textbox--error {
+  border-color: #ff0000;
+  background-color: #fff5f5;
+}
+
+.date-picker__textbox--error:focus {
+  border-color: #ff0000;
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+}
+
+.date-picker__error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 4px;
+  display: none;
+}
+
+/* Selection Component */
+.selection-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.selection__icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.selection__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.selection__select-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.selection__select {
+  width: 100%;
+  height: 33px;
+  padding: 0 14px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  background: #f5f5f5;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+.selection__select:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.selection__select--error {
+  border-color: #ff0000;
+  background-color: #fff5f5;
+}
+
+.selection__select--error:focus {
+  border-color: #ff0000;
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+}
+
+.selection__error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 4px;
+  display: none;
+}
+
+/* Ticket Number Component */
+.ticket-number-container {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+  border: none;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.ticket-number__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ticket-number__title {
+  color: #111111;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  order: 1;
+}
+
+.ticket-number__icon-wrapper {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  order: -1;
+}
+
+.ticket-number__icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.ticket-number__input {
+  width: 60px;
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 0 8px;
+  font-size: 16px;
+  color: #111111;
+  text-align: center;
+  background: #f5f5f5;
+}
+
+.ticket-number__input--error {
+  border-color: #d24141;
+}
+
+.ticket-number__error {
+  margin-top: 4px;
+  color: #d24141;
+  font-size: 14px;
+  font-weight: 700;
+  display: none;
+}
+
+/* Button Component */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: inherit;
+  transition: background-color 0.2s ease;
+  box-sizing: border-box;
+  font-size: 20px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.button--small {
+  height: 30px;
+  font-size: 16px;
+  padding: 0 16px;
+}
+
+.button--medium {
+  height: 40px;
+  font-size: 20px;
+  padding: 0 24px;
+}
+
+.button--large {
+  height: 50px;
+  font-size: 20px;
+  padding: 0 32px;
+}
+
+.button__icon {
+  width: 1.2em;
+  height: 1.2em;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.button__title {
+  white-space: nowrap;
 }
