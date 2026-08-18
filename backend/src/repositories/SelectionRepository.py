@@ -15,7 +15,6 @@ class SelectionRepository:
         """依類別查詢選單資料"""
         if self.db is None:
             return []
-
         return (
             self.db.query(SystemParam)
             .filter(SystemParam.parm_category == parm_category)

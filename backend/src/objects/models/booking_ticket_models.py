@@ -11,7 +11,7 @@ Base = declarative_base()
 
 class BookingTicket(Base):
     """預約訂票表模型"""
-    __tablename__ = "TB_BOOKING_TICKET"
+    __tablename__ = "tb_booking_ticket"
     
     booking_id = Column(BIGINT, primary_key=True, autoincrement=True)
     user_id = Column(String(10), nullable=False)
@@ -38,10 +38,10 @@ class BookingTicket(Base):
 
 class EarlyBird(Base):
     """早鳥票表模型"""
-    __tablename__ = "TB_EARLY_BIRD"
+    __tablename__ = "tb_early_bird"
     
     early_bird_id = Column(BIGINT, primary_key=True, autoincrement=True)
-    booking_id = Column(BIGINT, ForeignKey("TB_BOOKING_TICKET.booking_id"), nullable=False)
+    booking_id = Column(BIGINT, ForeignKey("tb_booking_ticket.booking_id"), nullable=False)
     user_id = Column(String(10), nullable=False)
     created_time = Column(DateTime, default=datetime.utcnow)
     updated_time = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -52,7 +52,7 @@ class EarlyBird(Base):
 
 class SystemParam(Base):
     """系統參數表模型"""
-    __tablename__ = "TB_SYS_PARM"
+    __tablename__ = 'tb_sys_parm'
 
     parm_id = Column(Integer, primary_key=True, autoincrement=True)
     parm_category = Column(String(50), nullable=False)
