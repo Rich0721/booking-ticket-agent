@@ -56,8 +56,10 @@ describe("Selection Component", () => {
       />,
     );
 
+    const backendUrl =
+      process.env.REACT_APP_BACKEND_URL || "http://localhost:8000";
     expect(global.fetch).toHaveBeenCalledWith(
-      "/loading-selected?parm_category=THSR_STATION",
+      `${backendUrl}/loading-selected?parm_category=THSR_STATION`,
     );
 
     await waitFor(() => {

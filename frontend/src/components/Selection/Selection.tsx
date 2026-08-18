@@ -26,8 +26,10 @@ const Selection: React.FC<ISelectionProps> = ({
 
     const fetchOptions = async () => {
       try {
+        const backendUrl =
+          process.env.REACT_APP_BACKEND_URL || "http://localhost:8000";
         const response = await fetch(
-          `/loading-selected?parm_category=${parmCategory}`,
+          `${backendUrl}/loading-selected?parm_category=${parmCategory}`,
         );
         const data = await response.json();
         const menu: ISelectionOption[] = data?.info?.menu ?? [];
