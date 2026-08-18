@@ -108,8 +108,8 @@
 
 - 分支名稱: bug_selection_component_multiple_load
 - 需求說明: Selection Component於THSR頁面中，理論上只需要打三次後端API即可，但目前會出現6次，請確認原因並回填至**錯誤原因**
-- 錯誤原因:
-- 完成開發:
+- 錯誤原因: **React 18 Strict Mode 的正常行為**。應用程式在 `index.tsx` 中啟用了 `React.StrictMode`，在開發環境會雙重執行 `useEffect` 來幫助檢測副作用問題。THSR頁面中有3個Selection Component（搭乘時間、搭乘起站、搭乘迄站），每個都在掛載時發起API調用。在Strict Mode下，每個Component的useEffect會被執行2次，導致 3 × 2 = 6次API調用。在生產環境中（沒有Strict Mode）會只有3次調用。此為預期行為，不是真正的bug。
+- 完成開發: 2026-08-17
 - PM確認:
 
 ### Bug - Selection Component後端uri指定
