@@ -103,3 +103,19 @@
 - 需求文件: 請參考[Booking THSR Page](./requirements/Booking_THSR.md)所使用到的Component
 - 完成開發: 2026-08-17
 - PM確認:
+
+### Bug - Selection Component多重載入及後端uri指定
+
+- 分支名稱: bug_selection_component_multiple_load
+- 需求說明: Selection Component於THSR頁面中，理論上只需要打三次後端API即可，但目前會出現6次，請確認原因並回填至**錯誤原因**
+- 錯誤原因:
+- 完成開發:
+- PM確認:
+
+### Bug - Selection Component後端uri指定
+
+- 分支名稱: bug_selection_component_backend_uri
+- 需求說明: Selection Component使用的uri目前是呼叫**http://localhost:3000**，須調整成**http://localhost:8000**，並且後續可以透過env檔案進行設定
+- 錯誤原因:
+- 完成開發:
+- PM確認:
