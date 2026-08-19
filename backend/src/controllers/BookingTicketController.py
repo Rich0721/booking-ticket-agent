@@ -42,12 +42,13 @@ async def booking_ticket(
     try:
         # 將request轉換為CBookingTicketInfo物件
         booking_date = datetime.strptime(request.booking_date, "%Y-%m-%d").date()
+        booking_time = request.booking_time[0:2] + ":" + request.booking_time[2:4]  # 將HHMM轉換為HH:MM格式
         
         booking_info = CBookingTicketInfo(
             user_id=request.user_id,
             ticket_type=request.ticket_type,
             booking_date=booking_date,
-            booking_time=request.booking_time,
+            booking_time=booking_time,
             start_station=request.start_station,
             end_station=request.end_station,
             adults=request.adults,

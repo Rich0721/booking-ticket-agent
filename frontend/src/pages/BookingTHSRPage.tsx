@@ -246,22 +246,20 @@ export const BookingTHSRPage: React.FC = () => {
   const handleConfirmBooking = async () => {
     // 準備API請求資料
     const requestData = {
-      info: {
-        user_id: formData.user_id,
-        ticket_type: "THSR",
-        booking_date: formData.booking_date,
-        booking_time: formData.booking_time,
-        start_station: formData.start_station,
-        end_station: formData.end_station,
-        adults: formData.adults,
-        childs: formData.childs,
-        students: formData.students,
-        elders: formData.elders,
-        disables: formData.disables,
-        is_early_bird: shouldShowEarlyBirdIds(),
-        is_member: formData.is_member,
-        early_ids: formData.early_ids,
-      },
+      user_id: formData.user_id,
+      ticket_type: "THSR",
+      booking_date: formData.booking_date,
+      booking_time: formData.booking_time,
+      start_station: formData.start_station,
+      end_station: formData.end_station,
+      adults: formData.adults,
+      childs: formData.childs,
+      students: formData.students,
+      elders: formData.elders,
+      disables: formData.disables,
+      is_early_bird: shouldShowEarlyBirdIds(),
+      is_member: formData.is_member,
+      early_ids: formData.early_ids,
     };
 
     try {

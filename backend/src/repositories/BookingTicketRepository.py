@@ -60,9 +60,6 @@ class BookingTicketRepository:
             SQLAlchemyError: 數據庫操作錯誤
         """
         try:
-            # 生成ticket_number (簡單實現: user_id + 時間戳)
-            ticket_number = f"{user_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}"
-            
             # 建立新的BookingTicket記錄
             booking = BookingTicket(
                 user_id=user_id,
@@ -72,7 +69,6 @@ class BookingTicketRepository:
                 elder_count=elder_count,
                 disabled_count=disabled_count,
                 ticket_type=ticket_type,
-                ticket_number=ticket_number,
                 booking_date=booking_date,
                 booking_time=booking_time,
                 start_station=start_station,
