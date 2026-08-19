@@ -292,4 +292,70 @@ describe("BookingTHSRPage", () => {
       expect(adultsInput).toHaveValue(1);
     });
   });
+
+  describe("Rule: 早鳥checkbox勾選狀態控制", () => {
+    // Scenario: 未勾選早鳥時，不顯示早鳥輸入框
+    // Reference: communication.md - Bug: 未勾選早鳥時，會跳出早鳥輸入框
+    it("當未勾選早鳥時，不應該顯示早鳥輸入框", () => {
+      // Given: 使用者在訂票頁面，早鳥checkbox未勾選
+      render(<BookingTHSRPage />);
+
+      // When: 使用者填寫超過6天的預約日期和成人票數
+      const dateInput = screen.getByLabelText("搭乘日期");
+      fireEvent.change(dateInput, { target: { value: "2026-07-10" } });
+
+      const adultsInput = screen.getByLabelText("成人票");
+      fireEvent.change(adultsInput, { target: { value: "2" } });
+
+      // Then: 早鳥輸入框不應該出現（因為is_early_bird為false）
+      // 注意：測試環境中的早鳥輸入框不會被渲染，因為shouldShowEarlyBirdIds()傳回false
+      expect(screen.queryByLabelText(/早鳥\d+/)).not.toBeInTheDocument();
+    });
+
+    // Scenario: 勾選早鳥且滿足條件時，顯示早鳥輸入框
+    // Reference: communication.md - Bug: 未勾選早鳥時，會跳出早鳥輸入框
+    it("當勾選早鳥且滿足條件時，應該顯示早鳥輸入框", () => {
+      // Given: 使用者在訂票頁面
+      render(<BookingTHSRPage />);
+
+      // When: 使用者勾選早鳥checkbox、填寫超過6天的預約日期和成人票數
+      const earlyBirdCheckbox = screen.getByLabelText("早鳥");
+      fireEvent.click(earlyBirdCheckbox);
+
+      const dateInput = screen.getByLabelText("搭乘日期");
+      fireEvent.change(dateInput, { target: { value: "2026-07-10" } });
+
+      const adultsInput = screen.getByLabelText("成人票");
+      fireEvent.change(adultsInput, { target: { value: "2" } });
+
+      // Then: 早鳥輸入框應該出現（因為is_early_bird為true且日期滿足條件）
+      waitFor(() => {
+        expect(screen.getByLabelText(/早鳥\d+/)).toBeInTheDocument();
+      });
+    });
+
+    // Scenario: 取消勾選早鳥時，清空早鳥ID
+    // Reference: communication.md - Bug: 未勾選早鳥時，會跳出早鳥輸入框
+    it("當取消勾選早鳥時，應該清空早鳥ID並隱藏早鳥輸入框", () => {
+      // Given: 使用者已勾選早鳥並填寫相關信息
+      render(<BookingTHSRPage />);
+
+      const earlyBirdCheckbox = screen.getByLabelText("早鳥");
+      const dateInput = screen.getByLabelText("搭乘日期");
+      const adultsInput = screen.getByLabelText("成人票");
+
+      // 先勾選早鳥並填寫數據
+      fireEvent.click(earlyBirdCheckbox);
+      fireEvent.change(dateInput, { target: { value: "2026-07-10" } });
+      fireEvent.change(adultsInput, { target: { value: "2" } });
+
+      // When: 使用者取消勾選早鳥checkbox
+      fireEvent.click(earlyBirdCheckbox);
+
+      // Then: 早鳥輸入框應該隱藏，且早鳥ID被清空
+      waitFor(() => {
+        expect(screen.queryByLabelText(/早鳥\d+/)).not.toBeInTheDocument();
+      });
+    });
+  });
 });
