@@ -13,6 +13,7 @@ const Selection: React.FC<ISelectionProps> = ({
   title,
   parmCategory,
   required = true,
+  value,
   onChange,
 }) => {
   const [options, setOptions] = useState<ISelectionOption[]>([
@@ -50,6 +51,13 @@ const Selection: React.FC<ISelectionProps> = ({
       isMounted = false;
     };
   }, [parmCategory]);
+
+  // 同步來自父組件的value prop
+  useEffect(() => {
+    if (value !== undefined) {
+      setSelectedValue(value);
+    }
+  }, [value]);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const nextValue = event.target.value;

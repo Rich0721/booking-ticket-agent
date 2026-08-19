@@ -234,6 +234,8 @@ export const BookingTHSRPage: React.FC = () => {
       early_ids: [],
     });
     setHintVisible(false);
+    setHintMessage("");
+    setHintType("warning");
     setDoubleCheckVisible(false);
   };
 
@@ -404,6 +406,7 @@ export const BookingTHSRPage: React.FC = () => {
                 title="搭乘時間"
                 iconSrc="/icons/clock.png"
                 parmCategory="THSR_TIME"
+                value={formData.booking_time}
                 onChange={(value) => handleFieldChange("booking_time", value)}
               />
             </div>
@@ -416,6 +419,7 @@ export const BookingTHSRPage: React.FC = () => {
                 title="搭乘起站"
                 iconSrc="/icons/transport.png"
                 parmCategory="THSR_STATION"
+                value={formData.start_station}
                 onChange={(value) => handleFieldChange("start_station", value)}
               />
             </div>
@@ -424,6 +428,7 @@ export const BookingTHSRPage: React.FC = () => {
                 title="搭乘迄站"
                 iconSrc="/icons/transport.png"
                 parmCategory="THSR_STATION"
+                value={formData.end_station}
                 onChange={(value) => handleFieldChange("end_station", value)}
               />
             </div>
