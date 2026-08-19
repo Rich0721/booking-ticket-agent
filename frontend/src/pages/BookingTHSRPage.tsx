@@ -266,7 +266,7 @@ export const BookingTHSRPage: React.FC = () => {
       students: formData.students,
       elders: formData.elders,
       disables: formData.disables,
-      is_early_bird: shouldShowEarlyBirdIds(),
+      is_early_bird: formData.is_early_bird,
       is_member: formData.is_member,
       early_ids: formData.early_ids,
     };
@@ -328,7 +328,8 @@ export const BookingTHSRPage: React.FC = () => {
       bookingInfo.push({ label: "會員資格", value: "使用高鐵會員" });
     }
 
-    if (shouldShowEarlyBirdIds() && formData.early_ids.length > 0) {
+    if (formData.is_early_bird) {
+      bookingInfo.push({ label: "早鳥資格", value: "使用早鳥優惠" });
       formData.early_ids.forEach((id, index) => {
         if (id) {
           bookingInfo.push({ label: `早鳥${index + 1}`, value: id });
