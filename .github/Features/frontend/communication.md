@@ -119,3 +119,11 @@
 - 錯誤原因:
 - 完成開發: 2026-08-18
 - PM確認:
+
+### Bug - Button Component API URI指定
+
+- 分支名稱: bug_button_component_backend_uri
+- 需求說明: Button Component使用的uri目前是呼叫**http://localhost:3000**，須調整成**http://localhost:8000**，並且後續可以透過env檔案進行設定
+- 錯誤原因:
+- 完成開發:
+- PM確認:
