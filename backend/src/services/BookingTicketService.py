@@ -63,8 +63,15 @@ class BookingTicketService:
             return False, error_message
         
         # 轉換booking_date為datetime
-        travel_datetime = datetime.combine(booking_info.booking_date, datetime.strptime(booking_info.booking_time, "%H:%M").time())
+
         travel_date = booking_info.booking_date
+        if booking_info.booking_time[-1] == "A":
+            travel_time = datetime.strptime(booking_info.booking_time[:-1], "%H%M").time()
+        else:
+            hour = int(booking_info.booking_time[:-1][:2]) + 12
+            minute = int(booking_info.booking_time[:-1][2:])
+            travel_time = datetime.strptime(f"{hour:02d}{minute:02d}", "%H%M").time()
+       
         system_date_only = system_date.date() if isinstance(system_date, datetime) else system_date
         
         # 計算可訂購日期
@@ -83,7 +90,7 @@ class BookingTicketService:
             elder_count=booking_info.elders,
             disabled_count=booking_info.disables,
             booking_date=booking_info.booking_date,
-            booking_time=booking_info.booking_time,
+            booking_time=travel_time,
             start_station=booking_info.start_station,
             end_station=booking_info.end_station,
             is_early_bird=booking_info.is_early_bird,

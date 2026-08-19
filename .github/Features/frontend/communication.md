@@ -127,3 +127,33 @@
 - 錯誤原因:
 - 完成開發: 2026-08-19
 - PM確認:
+
+### Bug - 未勾選早鳥時，會跳出早鳥輸入框
+
+- 分支名稱: bug_early_bird_input_box
+- 需求說明:
+  - is_early_bird預設為False，當**早鳥**Checkbox勾選時，才能設定成True，並且跳出早鳥輸入框
+  - 如果將**早鳥**Checkbox取消勾選，則is_early_bird需設定成False，並且清空早鳥輸入框
+- 錯誤原因:
+- 完成開發:
+- PM確認:
+
+### Bug - 部位欄位未清空
+
+- 分支名稱: bug_clear_input_fields
+- 需求說明:
+  - 點擊**清空填寫**後，所有欄位都需要清空
+  - 點擊**確認預約**後，所有欄位都需要清空
+- 錯誤原因:
+- 完成開發:
+- PM確認:
+
+### Bug - 二次確認視窗顯示有誤
+
+- 分支名稱: bug_double_check_window
+- 需求說明:
+  - 起訖站別不能顯示Selection的value，而是要顯示Selection的label
+  - 搭乘時間不能顯示Selection的value，而是要顯示Selection的label
+- 錯誤原因:
+- 完成開發:
+- PM確認:

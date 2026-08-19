@@ -483,7 +483,6 @@ export const BookingTHSRPage: React.FC = () => {
             <div className="early-bird">
               {Array.from({ length: getEarlyBirdCount() }).map((_, index) => (
                 <div key={`early_id_${index}`} className="eb-row">
-                  <label>早鳥{index + 1}</label>
                   <IDNumberInput
                     title={`早鳥${index + 1}`}
                     value={formData.early_ids[index] || ""}
@@ -507,7 +506,7 @@ export const BookingTHSRPage: React.FC = () => {
             />
             <Button
               title="預約訂票"
-              icon="/icons/booking.png"
+              icon="/icons/checked.png"
               buttonColor="#a7fdb9"
               selectedColor="#59fa59"
               buttonSize="medium"
