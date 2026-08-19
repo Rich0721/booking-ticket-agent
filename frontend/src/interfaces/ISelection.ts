@@ -26,6 +26,11 @@ export interface ISelectionProps {
   required?: boolean;
 
   /**
+   * 選擇的值，用於同步父組件的狀態
+   */
+  value?: string;
+
+  /**
    * 選擇變更時的回呼函式，回傳目前選擇的value值，若未選擇則回傳空字串
    */
   onChange?: (value: string) => void;

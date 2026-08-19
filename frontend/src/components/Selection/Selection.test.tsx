@@ -149,4 +149,70 @@ describe("Selection Component", () => {
     expect(select).not.toHaveClass("selection__select--error");
     expect(onChange).toHaveBeenLastCalledWith("");
   });
+
+  // Scenario: 父組件傳遞value prop時，Selection應該同步顯示該值
+  // Reference: communication.md - Bug: 部位欄位未清空
+  it("should sync selected value when value prop changes", async () => {
+    const { rerender } = render(
+      <Selection
+        iconSrc="/icons/station.png"
+        title="搭乘起站"
+        parmCategory="THSR_STATION"
+        value="TAIPEI"
+      />,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("台北")).toBeInTheDocument();
+    });
+
+    const select = screen.getByTestId("selection-select") as HTMLSelectElement;
+    expect(select.value).toBe("TAIPEI");
+
+    // 當父組件更新value為TAICHUNG時
+    rerender(
+      <Selection
+        iconSrc="/icons/station.png"
+        title="搭乘起站"
+        parmCategory="THSR_STATION"
+        value="TAICHUNG"
+      />,
+    );
+
+    // Selection應該同步顯示新的值
+    expect(select.value).toBe("TAICHUNG");
+  });
+
+  // Scenario: 父組件清空value時，Selection應該清空
+  // Reference: communication.md - Bug: 部位欄位未清空
+  it("should clear selected value when value prop is cleared", async () => {
+    const { rerender } = render(
+      <Selection
+        iconSrc="/icons/station.png"
+        title="搭乘起站"
+        parmCategory="THSR_STATION"
+        value="TAIPEI"
+      />,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("台北")).toBeInTheDocument();
+    });
+
+    const select = screen.getByTestId("selection-select") as HTMLSelectElement;
+    expect(select.value).toBe("TAIPEI");
+
+    // 當父組件清空value時
+    rerender(
+      <Selection
+        iconSrc="/icons/station.png"
+        title="搭乘起站"
+        parmCategory="THSR_STATION"
+        value=""
+      />,
+    );
+
+    // Selection應該顯示為空（請選擇）
+    expect(select.value).toBe("");
+  });
 });
