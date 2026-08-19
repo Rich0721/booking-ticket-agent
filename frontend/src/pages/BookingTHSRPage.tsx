@@ -69,6 +69,10 @@ export const BookingTHSRPage: React.FC = () => {
 
   // 檢查是否需要顯示早鳥ID輸入框
   const shouldShowEarlyBirdIds = (): boolean => {
+    // 必須勾選早鳥checkbox才能顯示早鳥輸入框
+    if (!formData.is_early_bird) {
+      return false;
+    }
     if (!formData.booking_date || formData.adults === 0) {
       return false;
     }
@@ -180,6 +184,11 @@ export const BookingTHSRPage: React.FC = () => {
     setFormData((prev) => {
       const updated = { ...prev, [field]: value };
 
+      // 當is_early_bird被取消勾選時，清空早鳥ID
+      if (field === "is_early_bird" && !value) {
+        updated.early_ids = [];
+      }
+
       // 當成人票數變更時，調整早鳥ID數組
       if (field === "adults") {
         const newAdultCount = value as number;
@@ -257,7 +266,7 @@ export const BookingTHSRPage: React.FC = () => {
       students: formData.students,
       elders: formData.elders,
       disables: formData.disables,
-      is_early_bird: shouldShowEarlyBirdIds(),
+      is_early_bird: formData.is_early_bird,
       is_member: formData.is_member,
       early_ids: formData.early_ids,
     };
@@ -319,7 +328,8 @@ export const BookingTHSRPage: React.FC = () => {
       bookingInfo.push({ label: "會員資格", value: "使用高鐵會員" });
     }
 
-    if (shouldShowEarlyBirdIds() && formData.early_ids.length > 0) {
+    if (formData.is_early_bird) {
+      bookingInfo.push({ label: "早鳥資格", value: "使用早鳥優惠" });
       formData.early_ids.forEach((id, index) => {
         if (id) {
           bookingInfo.push({ label: `早鳥${index + 1}`, value: id });

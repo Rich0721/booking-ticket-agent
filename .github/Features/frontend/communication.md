@@ -135,7 +135,7 @@
   - is_early_bird預設為False，當**早鳥**Checkbox勾選時，才能設定成True，並且跳出早鳥輸入框
   - 如果將**早鳥**Checkbox取消勾選，則is_early_bird需設定成False，並且清空早鳥輸入框
 - 錯誤原因:
-- 完成開發:
+- 完成開發: 2026-08-19
 - PM確認:
 
 ### Bug - 部位欄位未清空
