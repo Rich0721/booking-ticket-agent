@@ -291,6 +291,56 @@ describe("BookingTHSRPage", () => {
       expect(dateInput).toHaveValue("");
       expect(adultsInput).toHaveValue(1);
     });
+
+    // Scenario: 點擊清空填寫後，所有欄位都需要清空
+    // Reference: communication.md - Bug: 部位欄位未清空
+    it("使用者點擊清空填寫後，所有表單欄位和Checkbox都應該清空", () => {
+      // Given: 使用者已填寫多個欄位包括Checkbox
+      render(<BookingTHSRPage />);
+
+      const idInput = screen.getByLabelText("訂票者身份證字號");
+      fireEvent.change(idInput, { target: { value: "Z123456788" } });
+
+      const dateInput = screen.getByLabelText("搭乘日期");
+      fireEvent.change(dateInput, { target: { value: "2026-07-10" } });
+
+      const timeSelect = screen.getByLabelText("搭乘時間");
+      fireEvent.change(timeSelect, { target: { value: "10:30" } });
+
+      const startStationSelect = screen.getByLabelText("搭乘起站");
+      fireEvent.change(startStationSelect, { target: { value: "台北" } });
+
+      const endStationSelect = screen.getByLabelText("搭乘迄站");
+      fireEvent.change(endStationSelect, { target: { value: "台中" } });
+
+      const memberCheckbox = screen.getByLabelText("會員");
+      fireEvent.click(memberCheckbox);
+
+      const earlyBirdCheckbox = screen.getByLabelText("早鳥");
+      fireEvent.click(earlyBirdCheckbox);
+
+      const adultsInput = screen.getByLabelText("成人票");
+      fireEvent.change(adultsInput, { target: { value: "2" } });
+
+      const childInput = screen.getByLabelText("兒童票");
+      fireEvent.change(childInput, { target: { value: "3" } });
+
+      // When: 使用者點擊清空填寫按鈕
+      const clearButton = screen.getByRole("button", { name: "清空填寫" });
+      fireEvent.click(clearButton);
+
+      // Then: 所有欄位都應該回復到預設值
+      expect(idInput).toHaveValue("");
+      expect(dateInput).toHaveValue("");
+      expect(timeSelect).toHaveValue("");
+      expect(startStationSelect).toHaveValue("");
+      expect(endStationSelect).toHaveValue("");
+      expect(adultsInput).toHaveValue(1);
+      expect(childInput).toHaveValue(0);
+      // Checkbox應該被取消勾選
+      expect(memberCheckbox).not.toBeChecked();
+      expect(earlyBirdCheckbox).not.toBeChecked();
+    });
   });
 
   describe("Rule: 早鳥checkbox勾選狀態控制", () => {
@@ -430,6 +480,55 @@ describe("BookingTHSRPage", () => {
         expect(screen.getByTestId("double-check-modal")).toBeInTheDocument();
         expect(screen.queryByText(/早鳥資格/)).not.toBeInTheDocument();
         expect(screen.queryByText(/使用早鳥優惠/)).not.toBeInTheDocument();
+      });
+    });
+  });
+
+  describe("Rule: 確認預約後清空欄位", () => {
+    // Scenario: 成功預約後，所有欄位都需要清空
+    // Reference: communication.md - Bug: 部位欄位未清空
+    it("成功預約後，所有表單欄位應該清空", () => {
+      // Given: 使用者已填寫完整的預約信息
+      render(<BookingTHSRPage />);
+
+      const idInput = screen.getByLabelText("訂票者身份證字號");
+      fireEvent.change(idInput, { target: { value: "Z123456788" } });
+
+      const dateInput = screen.getByLabelText("搭乘日期");
+      fireEvent.change(dateInput, { target: { value: "2026-07-03" } });
+
+      const timeSelect = screen.getByLabelText("搭乘時間");
+      fireEvent.change(timeSelect, { target: { value: "10:30" } });
+
+      const startStationSelect = screen.getByLabelText("搭乘起站");
+      const endStationSelect = screen.getByLabelText("搭乘迄站");
+      fireEvent.change(startStationSelect, { target: { value: "台北" } });
+      fireEvent.change(endStationSelect, { target: { value: "台中" } });
+
+      const adultsInput = screen.getByLabelText("成人票");
+      fireEvent.change(adultsInput, { target: { value: "2" } });
+
+      const memberCheckbox = screen.getByLabelText("會員");
+      fireEvent.click(memberCheckbox);
+
+      // When: 使用者點擊預約訂票並確認
+      const bookingButton = screen.getByRole("button", { name: "預約訂票" });
+      fireEvent.click(bookingButton);
+
+      // 等待Double Check視窗出現後點擊確認
+      waitFor(() => {
+        const confirmButton = screen.getByRole("button", { name: "Confirm" });
+        fireEvent.click(confirmButton);
+      });
+
+      // Then: 在提示消息後，所有欄位應該清空
+      waitFor(() => {
+        expect(idInput).toHaveValue("");
+        expect(dateInput).toHaveValue("");
+        expect(timeSelect).toHaveValue("");
+        expect(startStationSelect).toHaveValue("");
+        expect(endStationSelect).toHaveValue("");
+        expect(adultsInput).toHaveValue(1);
       });
     });
   });

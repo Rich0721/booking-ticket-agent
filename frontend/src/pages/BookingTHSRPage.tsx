@@ -234,6 +234,8 @@ export const BookingTHSRPage: React.FC = () => {
       early_ids: [],
     });
     setHintVisible(false);
+    setHintMessage("");
+    setHintType("warning");
     setDoubleCheckVisible(false);
   };
 
