@@ -266,13 +266,16 @@ export const BookingTHSRPage: React.FC = () => {
 
     try {
       // 呼叫API
-      const response = await fetch("/booking-ticket", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL || "http://localhost:8000"}/booking-ticket`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestData),
         },
-        body: JSON.stringify(requestData),
-      });
+      );
 
       if (response.ok) {
         // 成功提交
