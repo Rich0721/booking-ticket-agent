@@ -154,6 +154,6 @@
 - 需求說明:
   - 起訖站別不能顯示Selection的value，而是要顯示Selection的label
   - 搭乘時間不能顯示Selection的value，而是要顯示Selection的label
-- 錯誤原因:
-- 完成開發:
+- 錯誤原因: Selection Component只通過onChange回調傳遞value（parm_value），而父組件沒有獲取對應的label（parm_name）信息。當在Double Check視窗中顯示預約信息時，只能顯示value而無法顯示用戶友好的label
+- 完成開發: 2026-08-19
 - PM確認:
