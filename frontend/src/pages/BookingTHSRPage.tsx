@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -61,15 +61,17 @@ export const BookingTHSRPage: React.FC = () => {
   >({});
 
   // 處理Selection選項加載，緩存選項供後續lookup使用
-  const handleSelectionOptionsLoad = (
-    parmCategory: string,
-    options: ISelectionOption[],
-  ) => {
-    setSelectionOptionsCache((prev) => ({
-      ...prev,
-      [parmCategory]: options,
-    }));
-  };
+  // 使用useCallback來記憶化函數引用，避免在父組件重新渲染時
+  // 導致Selection Component的useEffect被重複觸發而發起重複的API調用
+  const handleSelectionOptionsLoad = useCallback(
+    (parmCategory: string, options: ISelectionOption[]) => {
+      setSelectionOptionsCache((prev) => ({
+        ...prev,
+        [parmCategory]: options,
+      }));
+    },
+    [],
+  );
 
   // 根據parmCategory和value查詢對應的label
   const getLabelByValue = (parmCategory: string, value: string): string => {
