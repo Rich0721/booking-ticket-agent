@@ -73,7 +73,7 @@
 ### Bug - 資料庫連線問題
 
 - 分支名稱: bug_database_connection
-- 需求說明:資料庫連線會將Connection Pool佔據，導致其他API會需要等待過久的時間，請確保在執行資料庫操作後，能夠正確釋放Connection Pool
-- 錯誤原因:
-- 完成開發:
+- 需求說明: 資料庫連線會將Connection Pool佔據，導致其他API會需要等待過久的時間，請確保在執行資料庫操作後，能夠正確釋放Connection Pool
+- 錯誤原因: **FastAPI的dependency injection中`get_db_session()`函數缺乏生成器實現**。當前實現直接返回Session對象，而非使用`yield`語句。這導致FastAPI無法在請求完成後執行Session清理代碼。Session沒有被正確關閉，Connection Pool中的連接逐漸被佔據，導致新的API請求需要等待很長時間才能獲取可用連接。解決方案是將`get_db_session()`改為生成器函數，在finally塊中執行`session.close()`，確保FastAPI在每個請求結束時都能自動釋放數據庫連接。
+- 完成開發: 2026-08-20
 - PM確認:
