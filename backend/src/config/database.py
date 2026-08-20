@@ -292,14 +292,21 @@ def get_session_factory() -> sessionmaker:
     return get_provider()._session_factory or get_provider().get_session_factory()
 
 
-def get_db_session() -> Session:
+def get_db_session():
     """
     取得資料庫Session - FastAPI依賴注入函數
     
-    Returns:
+    使用生成器函數確保Session在每個請求完成後被正確關閉
+    FastAPI會在請求結束時自動執行finally塊中的清理代碼
+    
+    Yields:
         Session: SQLAlchemy Session實例
     """
-    return get_provider().get_db_session()
+    session = get_provider().get_db_session()
+    try:
+        yield session
+    finally:
+        session.close()
 
 
 def init_db():
