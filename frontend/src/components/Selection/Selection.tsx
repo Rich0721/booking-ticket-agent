@@ -15,6 +15,7 @@ const Selection: React.FC<ISelectionProps> = ({
   required = true,
   value,
   onChange,
+  onOptionsLoad,
 }) => {
   const [options, setOptions] = useState<ISelectionOption[]>([
     PLACEHOLDER_OPTION,
@@ -37,10 +38,18 @@ const Selection: React.FC<ISelectionProps> = ({
 
         if (isMounted) {
           setOptions([PLACEHOLDER_OPTION, ...menu]);
+          // 通知父組件選項已加載
+          if (onOptionsLoad) {
+            onOptionsLoad(menu);
+          }
         }
       } catch {
         if (isMounted) {
           setOptions([PLACEHOLDER_OPTION]);
+          // 即使出錯也通知父組件（傳遞空陣列）
+          if (onOptionsLoad) {
+            onOptionsLoad([]);
+          }
         }
       }
     };
@@ -50,7 +59,7 @@ const Selection: React.FC<ISelectionProps> = ({
     return () => {
       isMounted = false;
     };
-  }, [parmCategory]);
+  }, [parmCategory, onOptionsLoad]);
 
   // 同步來自父組件的value prop
   useEffect(() => {

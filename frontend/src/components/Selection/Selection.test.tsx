@@ -215,4 +215,45 @@ describe("Selection Component", () => {
     // Selection應該顯示為空（請選擇）
     expect(select.value).toBe("");
   });
+
+  // Scenario: Selection加載選項時應該調用onOptionsLoad callback
+  // Reference: communication.md - Bug: 二次確認視窗顯示有誤
+  it("should call onOptionsLoad callback when options are loaded", async () => {
+    const onOptionsLoad = jest.fn();
+    render(
+      <Selection
+        iconSrc="/icons/station.png"
+        title="搭乘起站"
+        parmCategory="THSR_STATION"
+        onOptionsLoad={onOptionsLoad}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("台北")).toBeInTheDocument();
+    });
+
+    // onOptionsLoad應該被調用且傳入選項陣列
+    expect(onOptionsLoad).toHaveBeenCalledWith(mockMenu);
+  });
+
+  // Scenario: Selection加載失敗時也應該調用onOptionsLoad
+  // Reference: communication.md - Bug: 二次確認視窗顯示有誤
+  it("should call onOptionsLoad with empty array when loading fails", async () => {
+    global.fetch = jest.fn().mockRejectedValue(new Error("Network error"));
+    const onOptionsLoad = jest.fn();
+
+    render(
+      <Selection
+        iconSrc="/icons/station.png"
+        title="搭乘起站"
+        parmCategory="THSR_STATION"
+        onOptionsLoad={onOptionsLoad}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(onOptionsLoad).toHaveBeenCalledWith([]);
+    });
+  });
 });

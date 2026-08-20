@@ -34,4 +34,9 @@ export interface ISelectionProps {
    * 選擇變更時的回呼函式，回傳目前選擇的value值，若未選擇則回傳空字串
    */
   onChange?: (value: string) => void;
+
+  /**
+   * 當Selection的選項加載完成時的回呼函式，回傳所有選項供父組件使用
+   */
+  onOptionsLoad?: (options: ISelectionOption[]) => void;
 }

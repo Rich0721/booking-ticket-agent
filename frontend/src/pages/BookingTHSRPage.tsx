@@ -9,6 +9,7 @@ import {
   Selection,
   TicketNumber,
 } from "../components";
+import { ISelectionOption } from "../interfaces/ISelection";
 import "./booking-thsr-page.css";
 
 interface BookingFormData {
@@ -53,6 +54,29 @@ export const BookingTHSRPage: React.FC = () => {
   const [hintMessage, setHintMessage] = useState("");
   const [doubleCheckVisible, setDoubleCheckVisible] = useState(false);
   const [hintType, setHintType] = useState<"info" | "warning">("warning");
+
+  // 用於緩存Selection的選項，以便在generateBookingInfo中查詢label
+  const [selectionOptionsCache, setSelectionOptionsCache] = useState<
+    Record<string, ISelectionOption[]>
+  >({});
+
+  // 處理Selection選項加載，緩存選項供後續lookup使用
+  const handleSelectionOptionsLoad = (
+    parmCategory: string,
+    options: ISelectionOption[],
+  ) => {
+    setSelectionOptionsCache((prev) => ({
+      ...prev,
+      [parmCategory]: options,
+    }));
+  };
+
+  // 根據parmCategory和value查詢對應的label
+  const getLabelByValue = (parmCategory: string, value: string): string => {
+    const options = selectionOptionsCache[parmCategory] || [];
+    const option = options.find((opt) => opt.parm_value === value);
+    return option ? option.parm_name : value;
+  };
 
   // 計算系統日期（模擬）
   const getSystemDate = (): Date => {
@@ -316,9 +340,18 @@ export const BookingTHSRPage: React.FC = () => {
     const bookingInfo = [
       { label: "訂票者身份證字號", value: formData.user_id },
       { label: "搭乘日期", value: formData.booking_date },
-      { label: "搭乘時間", value: formData.booking_time },
-      { label: "搭乘起站", value: formData.start_station },
-      { label: "搭乘迄站", value: formData.end_station },
+      {
+        label: "搭乘時間",
+        value: getLabelByValue("THSR_TIME", formData.booking_time),
+      },
+      {
+        label: "搭乘起站",
+        value: getLabelByValue("THSR_STATION", formData.start_station),
+      },
+      {
+        label: "搭乘迄站",
+        value: getLabelByValue("THSR_STATION", formData.end_station),
+      },
       { label: "成人票", value: `${formData.adults}張` },
       { label: "兒童票", value: `${formData.childs}張` },
       { label: "敬老票", value: `${formData.elders}張` },
@@ -408,6 +441,9 @@ export const BookingTHSRPage: React.FC = () => {
                 parmCategory="THSR_TIME"
                 value={formData.booking_time}
                 onChange={(value) => handleFieldChange("booking_time", value)}
+                onOptionsLoad={(options) =>
+                  handleSelectionOptionsLoad("THSR_TIME", options)
+                }
               />
             </div>
           </div>
@@ -421,6 +457,9 @@ export const BookingTHSRPage: React.FC = () => {
                 parmCategory="THSR_STATION"
                 value={formData.start_station}
                 onChange={(value) => handleFieldChange("start_station", value)}
+                onOptionsLoad={(options) =>
+                  handleSelectionOptionsLoad("THSR_STATION", options)
+                }
               />
             </div>
             <div className="field">
@@ -430,6 +469,9 @@ export const BookingTHSRPage: React.FC = () => {
                 parmCategory="THSR_STATION"
                 value={formData.end_station}
                 onChange={(value) => handleFieldChange("end_station", value)}
+                onOptionsLoad={(options) =>
+                  handleSelectionOptionsLoad("THSR_STATION", options)
+                }
               />
             </div>
           </div>
