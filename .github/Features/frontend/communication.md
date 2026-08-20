@@ -162,7 +162,9 @@
 
 - 分支名稱: bug_selection_component_multiple_api_calls
 - 需求說明:
-  - 在THSR頁面中，每輸入一個字元在身份證字號上，Selection Component會重複打API，導致頁面渲染多次，請確認原因並回填至**錯誤原因**
-- 錯誤原因: **BookingTHSRPage組件中`handleSelectionOptionsLoad`函數缺乏記憶化**。該函數在組件體內直接定義，每次父組件重新渲染時都會創建新的函數引用。Selection Component的useEffect依賴於`onOptionsLoad` prop，當prop的引用改變時就會被觸發。當用戶輸入身份證字號時，`setFormData`更新狀態，導致頁面重新渲染→新的`handleSelectionOptionsLoad`函數引用被創建→3個Selection Component各自檢測到`onOptionsLoad` prop改變→3個useEffect同時執行→發起3次API調用。解決方案是使用`useCallback`來記憶化該函數，確保函數引用在不必要時不改變。
+  - 開啟THSR頁面時，理論上只會打3次API，但目前一直會重複打API
+    - 當使用者進入THSR頁面時，載入**搭乘時間**、**搭乘起站**、**搭乘迄站**的選項，理論上只會打3次API
+    - 使用者無論進行任何輸入時，都不應該再打API，除非使用者切換至其他頁面，再切換回THSR頁面時，才會重新打3次API
+- 錯誤原因: **BookingTHSRPage中每個Selection的onOptionsLoad prop被定義為內聯箭頭函數**。每次頁面重新渲染時，這些內聯箭頭函數都會創建新的引用。Selection Component的useEffect依賴數組中有onOptionsLoad，因此當onOptionsLoad引用改變時，useEffect就會被重新執行並發起API調用。這導致Selection組件在頁面render時不斷重複打API。解決方案是為每個Selection的onOptionsLoad創建單獨的useCallback記憶化函數（handleLoadTimeOptions、handleLoadStationOptions），確保其引用在render之間保持不變，防止useEffect不必要的觸發。
 - 完成開發: 2026-08-20
 - PM確認:

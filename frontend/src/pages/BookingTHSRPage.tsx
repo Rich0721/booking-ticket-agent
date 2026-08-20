@@ -61,13 +61,21 @@ export const BookingTHSRPage: React.FC = () => {
   >({});
 
   // 處理Selection選項加載，緩存選項供後續lookup使用
-  // 使用useCallback來記憶化函數引用，避免在父組件重新渲染時
-  // 導致Selection Component的useEffect被重複觸發而發起重複的API調用
-  const handleSelectionOptionsLoad = useCallback(
-    (parmCategory: string, options: ISelectionOption[]) => {
+  // 為每個Selection的onOptionsLoad創建單獨的useCallback記憶化函數
+  // 確保每個Selection的onOptionsLoad prop在render之間保持同一個引用
+  // 防止Selection Component的useEffect因onOptionsLoad引用改變而被重複觸發
+  const handleLoadTimeOptions = useCallback((options: ISelectionOption[]) => {
+    setSelectionOptionsCache((prev) => ({
+      ...prev,
+      THSR_TIME: options,
+    }));
+  }, []);
+
+  const handleLoadStationOptions = useCallback(
+    (options: ISelectionOption[]) => {
       setSelectionOptionsCache((prev) => ({
         ...prev,
-        [parmCategory]: options,
+        THSR_STATION: options,
       }));
     },
     [],
@@ -443,9 +451,7 @@ export const BookingTHSRPage: React.FC = () => {
                 parmCategory="THSR_TIME"
                 value={formData.booking_time}
                 onChange={(value) => handleFieldChange("booking_time", value)}
-                onOptionsLoad={(options) =>
-                  handleSelectionOptionsLoad("THSR_TIME", options)
-                }
+                onOptionsLoad={handleLoadTimeOptions}
               />
             </div>
           </div>
@@ -459,9 +465,7 @@ export const BookingTHSRPage: React.FC = () => {
                 parmCategory="THSR_STATION"
                 value={formData.start_station}
                 onChange={(value) => handleFieldChange("start_station", value)}
-                onOptionsLoad={(options) =>
-                  handleSelectionOptionsLoad("THSR_STATION", options)
-                }
+                onOptionsLoad={handleLoadStationOptions}
               />
             </div>
             <div className="field">
@@ -471,9 +475,7 @@ export const BookingTHSRPage: React.FC = () => {
                 parmCategory="THSR_STATION"
                 value={formData.end_station}
                 onChange={(value) => handleFieldChange("end_station", value)}
-                onOptionsLoad={(options) =>
-                  handleSelectionOptionsLoad("THSR_STATION", options)
-                }
+                onOptionsLoad={handleLoadStationOptions}
               />
             </div>
           </div>
