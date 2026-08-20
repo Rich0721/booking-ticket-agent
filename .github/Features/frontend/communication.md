@@ -168,3 +168,31 @@
 - 錯誤原因: **BookingTHSRPage中每個Selection的onOptionsLoad prop被定義為內聯箭頭函數**。每次頁面重新渲染時，這些內聯箭頭函數都會創建新的引用。Selection Component的useEffect依賴數組中有onOptionsLoad，因此當onOptionsLoad引用改變時，useEffect就會被重新執行並發起API調用。這導致Selection組件在頁面render時不斷重複打API。解決方案是為每個Selection的onOptionsLoad創建單獨的useCallback記憶化函數（handleLoadTimeOptions、handleLoadStationOptions），確保其引用在render之間保持不變，防止useEffect不必要的觸發。
 - 完成開發: 2026-08-20
 - PM確認:
+
+### Bug - 身分證字號沒有進行驗證
+
+- 分支名稱: bug_id_number_validation
+- 需求說明:
+  - 當使用者輸日**IDNumberInput**時，當解除焦點時，未進行身份證字號驗證，導致使用者隨便輸入還是會由後端進行驗證，造成不必要的API呼叫
+- 錯誤原因:
+- 完成開發:
+- PM確認:
+
+### Bug - THSR頁面中，訂票者身份證字號與搭乘日期參數和顯示不一致
+
+- 分支名稱: bug_thsr_page_id_and_date_mismatch
+- 需求說明:
+  - 當使用者輸入**訂票者身份證字號**與**搭乘日期**後，點擊**預約訂票**後，會跳出二次確認視窗，並且點擊**確認預約**後，參數有進行清空，但是**訂票者身份證字號**與**搭乘日期**仍然顯示使用者輸入的值，造成參數與顯示不一致
+- 錯誤原因:
+- 完成開發:
+- PM確認:
+
+### Bug - 二次確定表單中，票數顯示有誤
+
+- 分支名稱: bug_double_check_ticket_count
+- 需求說明:
+  - 當使用者於任一個票種輸入超過10張，在二次確認表單中，票數會顯示成1張
+  - 當使用者於任一個票種輸入10張，應該需要顯示錯誤訊息，"訂票張數不能超過10張"，並且不會跳出二次確認表單
+- 錯誤原因:
+- 完成開發:
+- PM確認:
