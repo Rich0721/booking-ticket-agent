@@ -8,12 +8,13 @@ def validate_taiwan_id(id_string: str) -> bool:
     Returns:
         True if valid, False otherwise
     """
+
     if not id_string or len(id_string) != 10:
         return False
-    
+
     if not (id_string[0].isalpha() and id_string[1:].isdigit()):
         return False
-    
+
     # 首字母對應的數字
     id_letter_dict = {
         'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15, 'G': 16,
@@ -30,14 +31,20 @@ def validate_taiwan_id(id_string: str) -> bool:
         return False
     
     # 計算檢查碼
-    total = id_letter_dict[id_string[0]] // 10 + (id_letter_dict[id_string[0]] % 10) * 9
+    n1 = id_letter_dict[id_string[0]] // 10
+    n2 = id_letter_dict[id_string[0]] % 10
     
-    for i in range(1, 10):
-        total += int(id_string[i]) * (10 - i)
+    weights = [1, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1]
     
-    check_digit = (10 - (total % 10)) % 10
+    # 將英文字母拆解後的兩個數字與後續 9 個數字合併成一個 11 項的串列
+    digits = [n1, n2] + [int(d) for d in id_string[1:]]
     
-    return check_digit == int(id_string[9])
+    # 計算總和
+    total = sum(d * w for d, w in zip(digits, weights))
+    
+    # 若總和能被 10 整除，則代表驗證通過
+    return total % 10 == 0
+
 
 
 # 生成有效的測試身份證號
