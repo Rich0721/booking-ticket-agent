@@ -157,3 +157,12 @@
 - 錯誤原因: Selection Component只通過onChange回調傳遞value（parm_value），而父組件沒有獲取對應的label（parm_name）信息。當在Double Check視窗中顯示預約信息時，只能顯示value而無法顯示用戶友好的label
 - 完成開發: 2026-08-19
 - PM確認:
+
+### Bug - 重複打API與重複渲染問題
+
+- 分支名稱: bug_selection_component_multiple_api_calls
+- 需求說明:
+  - 在THSR頁面中，每輸入一個字元在身份證字號上，Selection Component會重複打API，導致頁面渲染多次，請確認原因並回填至**錯誤原因**
+- 錯誤原因: **BookingTHSRPage組件中`handleSelectionOptionsLoad`函數缺乏記憶化**。該函數在組件體內直接定義，每次父組件重新渲染時都會創建新的函數引用。Selection Component的useEffect依賴於`onOptionsLoad` prop，當prop的引用改變時就會被觸發。當用戶輸入身份證字號時，`setFormData`更新狀態，導致頁面重新渲染→新的`handleSelectionOptionsLoad`函數引用被創建→3個Selection Component各自檢測到`onOptionsLoad` prop改變→3個useEffect同時執行→發起3次API調用。解決方案是使用`useCallback`來記憶化該函數，確保函數引用在不必要時不改變。
+- 完成開發: 2026-08-20
+- PM確認:
