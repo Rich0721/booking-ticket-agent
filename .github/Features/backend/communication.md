@@ -69,3 +69,11 @@
 - 需求參考資料: [載入選單內容](./requirements/Loading_Selected.md)
 - 完成開發:
 - PM確認:
+
+### Bug - 資料庫連線問題
+
+- 分支名稱: bug_database_connection
+- 需求說明:資料庫連線會將Connection Pool佔據，導致其他API會需要等待過久的時間，請確保在執行資料庫操作後，能夠正確釋放Connection Pool
+- 錯誤原因:
+- 完成開發:
+- PM確認:
