@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { IDatePickerProps } from "../../interfaces/IDatePicker";
 import "./date-picker.css";
 
@@ -22,6 +22,16 @@ const DatePicker: React.FC<IDatePickerProps> = ({
   const [hasBlurred, setHasBlurred] = useState<boolean>(false);
 
   const minDate = useMemo(() => getTomorrowISODate(), []);
+
+  // 當父組件的value prop改變時，同步到本地狀態
+  // 這確保DatePicker可以作為受控組件使用
+  useEffect(() => {
+    setInputValue(value);
+    // 當value被清空時，重置驗證狀態
+    if (value === "") {
+      setHasBlurred(false);
+    }
+  }, [value]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nextValue = e.target.value;

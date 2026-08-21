@@ -103,4 +103,49 @@ describe("DatePicker Component", () => {
 
     expect(onBlur).toHaveBeenCalled();
   });
+
+  // 測試：受控組件 - 當父組件的value prop改變時，輸入框值也應該改變
+  // Reference: Bug - THSR頁面中，訂票者身份證字號與搭乘日期參數和顯示不一致 - 確保DatePicker支持受控組件模式
+  it("should update input value when value prop changes", () => {
+    const futureDate1 = getTomorrowISODate();
+    const futureDate2 = "2026-08-01";
+
+    const { rerender } = render(<DatePicker value={futureDate1} />);
+
+    const input = screen.getByTestId("date-picker-input") as HTMLInputElement;
+
+    // 初始值應該是 futureDate1
+    expect(input.value).toBe(futureDate1);
+
+    // 當value prop改變時，輸入框值也應該改變
+    rerender(<DatePicker value={futureDate2} />);
+    expect(input.value).toBe(futureDate2);
+  });
+
+  // 測試：受控組件 - 當value prop被清空時，應該清空輸入框並重置驗證狀態
+  // Reference: Bug - THSR頁面中，訂票者身份證字號與搭乘日期參數和顯示不一致 - 確保點擊確認預約後，DatePicker的驗證狀態也被重置
+  it("should reset validation state when value prop is cleared", () => {
+    const futureDate = getTomorrowISODate();
+
+    const { rerender } = render(
+      <DatePicker value={futureDate} onChange={() => {}} />,
+    );
+
+    const input = screen.getByTestId("date-picker-input") as HTMLInputElement;
+
+    // 輸入日期，失去焦點後應該沒有錯誤
+    fireEvent.blur(input);
+    let errorMessage = screen.queryByTestId("error-message");
+    expect(errorMessage).not.toBeInTheDocument();
+
+    // 當value prop被清空時，應該清空輸入框並重置驗證狀態
+    rerender(<DatePicker value="" onChange={() => {}} />);
+
+    // 驗證輸入框被清空
+    expect(input.value).toBe("");
+
+    // 驗證錯誤訊息被隱藏（因為hasBlurred被重置為false）
+    errorMessage = screen.queryByTestId("error-message");
+    expect(errorMessage).not.toBeInTheDocument();
+  });
 });
