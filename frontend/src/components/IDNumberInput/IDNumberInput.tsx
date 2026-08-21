@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IIDNumberInputProps } from "../../interfaces/IIDNumberInput";
 import { isValidTaiwanID } from "../../utils/idValidator";
 import "./id-number-input.css";
@@ -29,6 +29,17 @@ const IDNumberInput: React.FC<IIDNumberInputProps> = ({
   const [inputValue, setInputValue] = useState<string>(value);
   const [hasBlurred, setHasBlurred] = useState<boolean>(false);
   const [isValid, setIsValid] = useState<boolean>(true);
+
+  // 當父組件的value prop改變時，同步到本地狀態
+  // 這確保IDNumberInput可以作為受控組件使用
+  useEffect(() => {
+    setInputValue(value);
+    // 當value被清空時，重置驗證狀態
+    if (value === "") {
+      setHasBlurred(false);
+      setIsValid(true);
+    }
+  }, [value]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value.toUpperCase();

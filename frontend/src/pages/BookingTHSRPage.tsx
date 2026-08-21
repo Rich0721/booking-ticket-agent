@@ -10,6 +10,7 @@ import {
   TicketNumber,
 } from "../components";
 import { ISelectionOption } from "../interfaces/ISelection";
+import { isValidTaiwanID } from "../utils/idValidator";
 import "./booking-thsr-page.css";
 
 interface BookingFormData {
@@ -123,10 +124,10 @@ export const BookingTHSRPage: React.FC = () => {
   };
 
   // 驗證身份證字號格式
+  // 使用isValidTaiwanID函式進行完整的台灣身份證驗證
+  // 包括格式檢查和檢驗碼驗證
   const validateIdNumber = (id: string): boolean => {
-    if (!id) return false;
-    const idRegex = /^[A-Z]\d{9}$/;
-    return idRegex.test(id);
+    return isValidTaiwanID(id);
   };
 
   // 驗證表單

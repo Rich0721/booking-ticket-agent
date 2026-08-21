@@ -191,4 +191,44 @@ describe("IDNumberInput Component", () => {
       unmount();
     });
   });
+
+  // 測試：受控組件 - 當父組件的value prop改變時，輸入框值也應該改變
+  // Reference: Bug - 部位欄位未清空 - 確保IDNumberInput支持受控組件模式
+  it("should update input value when value prop changes", () => {
+    const { rerender } = render(<IDNumberInput value="A100000001" />);
+
+    const input = screen.getByTestId("id-number-input") as HTMLInputElement;
+
+    // 初始值應該是 A100000001
+    expect(input.value).toBe("A100000001");
+
+    // 當value prop改變時，輸入框值也應該改變
+    rerender(<IDNumberInput value="B100000002" />);
+    expect(input.value).toBe("B100000002");
+  });
+
+  // 測試：受控組件 - 當value prop被清空時，應該清空輸入框並重置驗證狀態
+  // Reference: Bug - 清空填寫 - 確保點擊清空填寫後，IDNumberInput的驗證狀態也被重置
+  it("should reset validation state when value prop is cleared", () => {
+    const { rerender } = render(
+      <IDNumberInput value="Z123456789" onChange={() => {}} />,
+    );
+
+    const input = screen.getByTestId("id-number-input") as HTMLInputElement;
+
+    // 輸入錯誤的身份證號，失去焦點後應該顯示錯誤
+    fireEvent.blur(input);
+    let errorMessage = screen.queryByTestId("error-message");
+    expect(errorMessage).toBeInTheDocument();
+
+    // 當value prop被清空時，應該清空輸入框並重置驗證狀態
+    rerender(<IDNumberInput value="" onChange={() => {}} />);
+
+    // 驗證輸入框被清空
+    expect(input.value).toBe("");
+
+    // 驗證錯誤訊息被隱藏
+    errorMessage = screen.queryByTestId("error-message");
+    expect(errorMessage).not.toBeInTheDocument();
+  });
 });
