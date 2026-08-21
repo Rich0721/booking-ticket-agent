@@ -166,15 +166,36 @@ export const BookingTHSRPage: React.FC = () => {
       errors.push({ field: "stations", message: "請選擇不同的起迄站" });
     }
 
-    // 檢查票券總數
+    // 檢查票券總數和單個票種限制
     const totalTickets =
       formData.adults +
       formData.childs +
       formData.elders +
       formData.disables +
       formData.students;
+
+    // 檢查單個票種是否超過10張
+    const ticketTypes = [
+      { name: "成人票", value: formData.adults },
+      { name: "兒童票", value: formData.childs },
+      { name: "敬老票", value: formData.elders },
+      { name: "愛心票", value: formData.disables },
+      { name: "學生票", value: formData.students },
+    ];
+
+    for (const ticket of ticketTypes) {
+      if (ticket.value > 10) {
+        errors.push({
+          field: "tickets",
+          message: `${ticket.name}不能超過10張`,
+        });
+        break;
+      }
+    }
+
+    // 檢查總票數是否超過10張
     if (totalTickets > 10) {
-      errors.push({ field: "tickets", message: "單一訂單最多可訂購10張" });
+      errors.push({ field: "tickets", message: "訂票張數不能超過10張" });
     }
 
     // 檢查是否有任何訂票資訊

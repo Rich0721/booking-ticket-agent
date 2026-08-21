@@ -496,9 +496,6 @@ describe("BookingTHSRPage", () => {
       });
     });
 
-    // Scenario: 驗證未勾選早鳥時，Double Check視窗不顯示早鳥資格
-    // Reference: communication.md - Bug: 未勾選早鳥時，會跳出早鳥輸入框
-    it("當未勾選早鳥時，Double Check視窗不應該顯示早鳥資格", () => {
       // Given: 使用者在訂票頁面，早鳥checkbox未勾選
       render(<BookingTHSRPage />);
 
@@ -508,6 +505,89 @@ describe("BookingTHSRPage", () => {
 
       const dateInput = screen.getByLabelText("搭乘日期");
       fireEvent.change(dateInput, { target: { value: "2026-07-10" } });
+
+      const timeSelect = screen.getByLabelText("搭乘時間");
+      fireEvent.change(timeSelect, { target: { value: "10:30" } });
+
+      const startStationSelect = screen.getByLabelText("搭乘起站");
+      const endStationSelect = screen.getByLabelText("搭乘迄站");
+      fireEvent.change(startStationSelect, { target: { value: "台北" } });
+      fireEvent.change(endStationSelect, { target: { value: "台中" } });
+
+      const adultsInput = screen.getByLabelText("成人票");
+      fireEvent.change(adultsInput, { target: { value: "2" } });
+
+      // When: 使用者點擊預約訂票
+      const bookingButton = screen.getByRole("button", { name: "預約訂票" });
+      fireEvent.click(bookingButton);
+
+      // Then: Double Check視窗應該顯示，並且不顯示早鳥資格
+      await waitFor(() => {
+        expect(screen.getByTestId("double-check-modal")).toBeInTheDocument();
+        expect(screen.queryByText(/早鳥資格/)).not.toBeInTheDocument();
+      });
+    });
+
+    // Scenario: 驗證票數超過10張時顯示錯誤訊息
+    // Reference: communication.md - Bug: 二次確定表單中，票數顯示有誤
+    it("當總票數超過10張時，應該顯示錯誤訊息", () => {
+      // Given: 使用者在訂票頁面
+      render(<BookingTHSRPage />);
+
+      // Setup required fields
+      const idInput = screen.getByLabelText("訂票者身份證字號");
+      fireEvent.change(idInput, { target: { value: "Z123456788" } });
+
+      const dateInput = screen.getByLabelText("搭乘日期");
+      fireEvent.change(dateInput, { target: { value: "2026-07-03" } });
+
+      // When: 使用者輸入超過10張的票券
+      const adultsInput = screen.getByLabelText("成人票");
+      const childInput = screen.getByLabelText("兒童票");
+      const elderInput = screen.getByLabelText("敬老票");
+
+      fireEvent.change(adultsInput, { target: { value: "5" } });
+      fireEvent.change(childInput, { target: { value: "4" } });
+      fireEvent.change(elderInput, { target: { value: "3" } }); // 總共12張
+
+      const bookingButton = screen.getByRole("button", { name: "預約訂票" });
+      fireEvent.click(bookingButton);
+
+      // Then: 應該顯示錯誤訊息
+      waitFor(() => {
+        expect(screen.getByTestId("hint-modal")).toBeInTheDocument();
+        expect(screen.getByText(/訂票張數不能超過10張/)).toBeInTheDocument();
+      });
+    });
+
+    // Scenario: 驗證單個票種超過10張時顯示錯誤訊息
+    // Reference: communication.md - Bug: 二次確定表單中，票數顯示有誤
+    it("當單個票種超過10張時，應該顯示錯誤訊息", () => {
+      // Given: 使用者在訂票頁面
+      render(<BookingTHSRPage />);
+
+      // Setup required fields
+      const idInput = screen.getByLabelText("訂票者身份證字號");
+      fireEvent.change(idInput, { target: { value: "Z123456788" } });
+
+      const dateInput = screen.getByLabelText("搭乘日期");
+      fireEvent.change(dateInput, { target: { value: "2026-07-03" } });
+
+      // When: 使用者輸入單個票種超過10張
+      const adultsInput = screen.getByLabelText("成人票");
+      fireEvent.change(adultsInput, { target: { value: "15" } });
+
+      const bookingButton = screen.getByRole("button", { name: "預約訂票" });
+      fireEvent.click(bookingButton);
+
+      // Then: 應該顯示單票種超過限制的錯誤訊息
+      waitFor(() => {
+        expect(screen.getByTestId("hint-modal")).toBeInTheDocument();
+        expect(screen.getByText(/不能超過10張/)).toBeInTheDocument();
+      });
+    });
+  });
+});
 
       const timeSelect = screen.getByLabelText("搭乘時間");
       fireEvent.change(timeSelect, { target: { value: "10:30" } });
