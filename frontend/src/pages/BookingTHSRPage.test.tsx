@@ -496,7 +496,8 @@ describe("BookingTHSRPage", () => {
       });
     });
 
-      // Given: 使用者在訂票頁面，早鳥checkbox未勾選
+    // Given: 使用者在訂票頁面，早鳥checkbox未勾選
+    it("當未勾選早鳥時，Double Check視窗不顯示早鳥資格", async () => {
       render(<BookingTHSRPage />);
 
       // Setup all required fields
@@ -562,7 +563,7 @@ describe("BookingTHSRPage", () => {
 
     // Scenario: 驗證單個票種超過10張時顯示錯誤訊息
     // Reference: communication.md - Bug: 二次確定表單中，票數顯示有誤
-    it("當單個票種超過10張時，應該顯示錯誤訊息", () => {
+    it("當單個票種超過10張時，應該顯示錯誤訊息", async () => {
       // Given: 使用者在訂票頁面
       render(<BookingTHSRPage />);
 
@@ -581,34 +582,9 @@ describe("BookingTHSRPage", () => {
       fireEvent.click(bookingButton);
 
       // Then: 應該顯示單票種超過限制的錯誤訊息
-      waitFor(() => {
+      await waitFor(() => {
         expect(screen.getByTestId("hint-modal")).toBeInTheDocument();
         expect(screen.getByText(/不能超過10張/)).toBeInTheDocument();
-      });
-    });
-  });
-});
-
-      const timeSelect = screen.getByLabelText("搭乘時間");
-      fireEvent.change(timeSelect, { target: { value: "10:30" } });
-
-      const startStationSelect = screen.getByLabelText("搭乘起站");
-      const endStationSelect = screen.getByLabelText("搭乘迄站");
-      fireEvent.change(startStationSelect, { target: { value: "台北" } });
-      fireEvent.change(endStationSelect, { target: { value: "台中" } });
-
-      const adultsInput = screen.getByLabelText("成人票");
-      fireEvent.change(adultsInput, { target: { value: "1" } });
-
-      // When: 使用者未勾選早鳥checkbox，點擊預約訂票
-      const bookingButton = screen.getByRole("button", { name: "預約訂票" });
-      fireEvent.click(bookingButton);
-
-      // Then: Double Check視窗應該存在，但不顯示早鳥資格信息
-      waitFor(() => {
-        expect(screen.getByTestId("double-check-modal")).toBeInTheDocument();
-        expect(screen.queryByText(/早鳥資格/)).not.toBeInTheDocument();
-        expect(screen.queryByText(/使用早鳥優惠/)).not.toBeInTheDocument();
       });
     });
   });
