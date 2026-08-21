@@ -26,7 +26,10 @@ const TicketNumber: React.FC<ITicketNumberProps> = ({
       return;
     }
 
+    // 確保inputValue與value同步，即使value是0
     setInputValue(String(value));
+    // 當value改變時重置錯誤訊息
+    setErrorMessage("");
   }, [value]);
 
   const validateValue = (nextValue: string): number | null => {
