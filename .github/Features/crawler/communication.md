@@ -7,5 +7,5 @@
 - 分支名稱: feature_crawler_thsr
 - 需求說明: 請根據**需求文件**說明完成實作該爬蟲功能
 - 需求參考資料: [需求文件](./requirements/booking_thsr.md)
-- 完成開發:
+- 完成開發: 2026-08-24
 - PM確認:
