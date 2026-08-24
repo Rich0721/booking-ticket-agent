@@ -1,0 +1,35 @@
+flowchart TD
+    %% Nodes
+        StartPoint(開始自動訂票流程)
+        SearchDatabase(查詢資料庫是否有今天的訂票需求)
+        CheckDataNumbers(檢查今天的訂票需求數量)
+        TurnOnThreeThreads(開啟三個執行緒)
+        TurnOnThread(根據資料庫的訂票需求數量，開啟對應數量的執行緒)
+        OpenBrowser(開啟瀏覽器)
+        StartBooking(開始訂票-請參考需求說明)
+        BookingError(訂票失敗)
+        UpdateDatabase(更新資料庫訂票結果)
+        CheckBookingErrorList{檢查訂票失敗的資料清單}
+        RetryBooking(重新嘗試訂票)
+        AddErrorList(將訂票失敗的資料加入錯誤清單)
+        UpdateErrorDatabase(更新資料庫訂票失敗的資料)
+        EndPoint(完成自動訂票流程)
+    %% Edge Connections between nodes
+        StartPoint --> SearchDatabase
+        SearchDatabase --> CheckDataNumbers
+        CheckDataNumbers -->|=0| EndPoint
+        CheckDataNumbers -->|≧3| TurnOnThreeThreads
+        CheckDataNumbers -->|<3| TurnOnThread
+        TurnOnThreeThreads --> OpenBrowser
+        TurnOnThread --> OpenBrowser
+        OpenBrowser --> StartBooking
+        StartBooking -->|訂票成功| UpdateDatabase
+        StartBooking -->|訂票失敗| BookingError
+        BookingError --> AddErrorList
+        AddErrorList --> CheckBookingErrorList
+        CheckBookingErrorList -->|無失敗資料| EndPoint
+        CheckBookingErrorList -->|有失敗資料| RetryBooking
+        RetryBooking -->|訂票成功| UpdateDatabase
+        RetryBooking -->|訂票失敗| UpdateErrorDatabase
+        UpdateDatabase --> EndPoint
+        UpdateErrorDatabase --> EndPoint
