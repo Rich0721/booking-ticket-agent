@@ -14,5 +14,28 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     restart: unless-stopped
+
+  crawler-agent:
+    image: crawler-agent:${APP_VERSION:-latest}
+    container_name: crawler-agent-container
+    depends_on:
+      - booking-agent-db
+    environment:
+      DB_TYPE: postgresql
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      TWO_CAPTCHA_API_KEY: ${TWO_CAPTCHA_API_KEY}
+      PYTHONUNBUFFERED: 1
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    restart: unless-stopped
+    build:
+      context: ./crawler
+      dockerfile: Dockerfile
+
 volumes:
   pg_data_agent:
