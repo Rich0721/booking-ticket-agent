@@ -1,5 +1,5 @@
 from datetime import date
-from typing import List, Tuple, Optional, Set
+from typing import List, Tuple, Optional, Dict
 from twocaptcha import TwoCaptcha
 from concurrent.futures import ThreadPoolExecutor
 import time
@@ -36,8 +36,7 @@ class BookingTicketService:
     def __init__(self):
         self.repository = BookingTicketRepository()
         self.web_driver_manager = CWebDriver.get_instance()
-        self.__failed_bookings: List[CBookingTicketInfo] = []
-        self.__retry_bookings: Set[int] = set()  # 追蹤已經重試過的booking IDs
+        self.__booking_status: Dict[int, CBookingTicketInfo] = {}  # 追蹤訂票狀態 {booking_id -> booking_info}
     
     def process_daily_bookings(self, booking_date: date) -> Tuple[int, int]:
         """
@@ -53,18 +52,18 @@ class BookingTicketService:
         bookings = self.repository.get_booking_tickets_by_can_book_date(booking_date)
         
         if not bookings:
-            print(f"沒有找到日期 {booking_date} 的待訂票記錄")
+            logger.info(f"沒有找到日期 {booking_date} 的待訂票記錄")
             return 0, 0
         
-        print(f"找到 {len(bookings)} 筆待訂票記錄")
+        logger.info(f"找到 {len(bookings)} 筆待訂票記錄")
         
         # 計算線程數，以3為倍數
         thread_count = min(len(bookings), self.MAX_WORKERS)
         
         # 使用ThreadPoolExecutor進行多線程訂票
-        self.__failed_bookings = []
-        self.__retry_bookings = set()
+        self.__booking_status = {booking.booking_id: booking for booking in bookings}
         successful_count = 0
+        failed_bookings = []  # 追蹤失敗的訂票
         
         with ThreadPoolExecutor(max_workers=thread_count) as executor:
             futures = []
@@ -84,17 +83,16 @@ class BookingTicketService:
                     if success:
                         successful_count += 1
                     else:
-                        self.__failed_bookings.append(booking)
+                        failed_bookings.append(booking)
                 except Exception as e:
                     logger.error(f"訂票失敗 (ID: {booking.booking_id}): {str(e)}")
-                    self.__failed_bookings.append(booking)
+                    failed_bookings.append(booking)
         
         # 重試失敗的訂票
-        retry_count = 0
-        for booking in self.__failed_bookings[:]:  # 使用列表副本以允許修改原列表
+        retry_success_count = 0
+        for booking in failed_bookings[:]:  # 使用列表副本以允許修改原列表
             try:
                 logger.info(f"開始重試訂票 (ID: {booking.booking_id})")
-                self.__retry_bookings.add(booking.booking_id)
                 
                 success = self._process_single_booking(
                     booking,
@@ -103,8 +101,8 @@ class BookingTicketService:
                 )
                 
                 if success:
-                    retry_count += 1
-                    self.__failed_bookings.remove(booking)
+                    retry_success_count += 1
+                    failed_bookings.remove(booking)
                     logger.info(f"重試訂票成功 (ID: {booking.booking_id})")
                 else:
                     logger.warning(f"重試訂票失敗 (ID: {booking.booking_id})")
@@ -113,12 +111,12 @@ class BookingTicketService:
                 logger.error(f"重試訂票異常 (ID: {booking.booking_id}): {str(e)}")
         
         # 標記仍然失敗的訂票
-        for booking in self.__failed_bookings:
+        for booking in failed_bookings:
             logger.warning(f"標記訂票失敗 (ID: {booking.booking_id}) - 狀態: Booking Error")
             self.repository.update_ticket_number(booking.booking_id, "Booking Error")
         
-        failed_count = len(self.__failed_bookings)
-        return successful_count + retry_count, failed_count
+        failed_count = len(failed_bookings)
+        return successful_count + retry_success_count, failed_count
         
     
     def _process_single_booking(

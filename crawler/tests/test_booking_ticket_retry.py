@@ -1,7 +1,7 @@
 """
 BookingTicketService重試機制測試
 來源：Requirement - Driver卡住處理
-- 場景1: 第一次訂票失敗加入重試列表
+- 場景1: 第一次訂票失敗加入重試隊列
 - 場景2: 重試成功則從失敗列表中移除
 - 場景3: 重試失敗則標記為"Booking Error"
 - 場景4: Driver超時時自動重啟並重試
@@ -46,8 +46,8 @@ class TestBookingTicketServiceRetry:
     
     def test_failed_booking_added_to_retry_list(self, booking_service, mock_repository, mock_web_driver_manager):
         """
-        場景1: 第一次訂票失敗加入重試列表
-        如果卡住超過一定時間，則自動重啟Driver，並且該次操作資料加入Retry列表
+        場景1: 第一次訂票失敗加入重試隊列
+        如果卡住超過一定時間，則自動重啟Driver，並且該次操作資料加入重試隊列
         來源：Requirement - Driver卡住處理
         """
         # 設置模擬對象
@@ -130,7 +130,7 @@ class TestBookingTicketServiceRetry:
     def test_second_failure_marked_as_booking_error(self, booking_service, mock_repository, mock_web_driver_manager):
         """
         場景3: 如果已經在Retry階段，則自動重啟，但該次操作仍然視為失敗
-        不再加入Retry列表，直接回填至Table為"Booking Error"
+        不再加入重試隊列，直接回填至Table為"Booking Error"
         來源：Requirement - Driver卡住處理
         """
         booking_info = CBookingTicketInfo(
@@ -229,9 +229,9 @@ class TestBookingTicketServiceRetry:
             assert successful == 1  # 1個成功
             assert failed == 1      # 1個失敗
     
-    def test_retry_booking_id_tracking(self, booking_service, mock_repository, mock_web_driver_manager):
+    def test_single_retry_per_failed_booking(self, booking_service, mock_repository, mock_web_driver_manager):
         """
-        場景5: 追蹤已經重試過的booking IDs
+        場景5: 每個失敗的訂票僅重試一次
         來源：Requirement - Driver卡住處理
         """
         booking_info = CBookingTicketInfo(
@@ -259,8 +259,8 @@ class TestBookingTicketServiceRetry:
             booking_service,
             '_process_single_booking',
             side_effect=[False, True]
-        ):
+        ) as mock_process:
             booking_service.process_daily_bookings(date.today())
             
-            # 檢查是否追蹤了重試的booking ID
-            assert 1 in booking_service._BookingTicketService__retry_bookings
+            # 檢查調用次數 - 應該恰好調用2次
+            assert mock_process.call_count == 2
