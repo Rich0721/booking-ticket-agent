@@ -30,7 +30,7 @@ class BookingTicketRepository:
                            START_STATION, END_STATION, IS_EARLY_BIRD, IS_MEMBER, CAN_BOOK_DATE, 
                            TICKET_NUMBER
                     FROM TB_BOOKING_TICKET
-                    WHERE CAN_BOOK_DATE = %s AND TICKET_NUMBER IS NULL
+                    WHERE CAN_BOOK_DATE = %s AND (TICKET_NUMBER IS NULL or TICKET_NUMBER = 'Booking Error')
                     ORDER BY BOOKING_ID ASC
                     """,
                     (can_book_date,)

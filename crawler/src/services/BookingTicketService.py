@@ -1,5 +1,6 @@
 from datetime import date
 from typing import List, Tuple, Optional
+from twocaptcha import TwoCaptcha
 from concurrent.futures import ThreadPoolExecutor
 import time
 import os
@@ -23,6 +24,8 @@ class BookingTicketService:
     BOOKING_URL = "https://irs.thsrc.com.tw"
     MAX_WORKERS = 3
     RETRY_COUNT = 3
+    TWO_CAPTCHA_API_KEY = os.getenv("TWO_CAPTCHA_API_KEY", "")
+    SOLVER = TwoCaptcha(TWO_CAPTCHA_API_KEY)
     
     def __init__(self):
         self.repository = BookingTicketRepository()
@@ -49,8 +52,7 @@ class BookingTicketService:
         print(f"找到 {len(bookings)} 筆待訂票記錄")
         
         # 計算線程數，以3為倍數
-        thread_count = max(1, (len(bookings) + 2) // 3)
-        thread_count = min(thread_count, self.MAX_WORKERS)
+        thread_count = min(len(bookings), self.MAX_WORKERS)
         
         # 使用ThreadPoolExecutor進行多線程訂票
         self.__failed_bookings = []
@@ -58,8 +60,8 @@ class BookingTicketService:
         
         with ThreadPoolExecutor(max_workers=thread_count) as executor:
             futures = []
-            for booking in bookings:
-                future = executor.submit(self._process_single_booking, booking)
+            for index, booking in enumerate(bookings):
+                future = executor.submit(self._process_single_booking, booking, index)
                 futures.append((booking, future))
             
             # 等待所有任務完成
@@ -78,7 +80,7 @@ class BookingTicketService:
         retry_count = 0
         for booking in self.__failed_bookings:
             try:
-                success = self._process_single_booking(booking)
+                success = self._process_single_booking(booking, 0)
                 if success:
                     retry_count += 1
                     self.__failed_bookings.remove(booking)
@@ -91,8 +93,9 @@ class BookingTicketService:
         
         failed_count = len(self.__failed_bookings)
         return successful_count + retry_count, failed_count
+        
     
-    def _process_single_booking(self, booking_info: CBookingTicketInfo) -> bool:
+    def _process_single_booking(self, booking_info: CBookingTicketInfo, thread_id:int) -> bool:
         """
         處理單筆訂票
         
@@ -115,7 +118,7 @@ class BookingTicketService:
             )
             
             # 第三步：解決驗證碼並查詢
-            self._handle_captcha_and_search(driver)
+            self._handle_captcha_and_search(driver, thread_id)
             
             # 等待結果加載
             time.sleep(2)
@@ -215,7 +218,7 @@ class BookingTicketService:
             
             # 填寫出發日期
             input_element = driver.find_element(By.ID, "toTimeInputField")
-            date_str = booking_info.booking_date.strftime("%Y-%m-%d")
+            date_str = booking_info.booking_date.strftime("%Y/%m/%d")
             driver.execute_script(f"arguments[0]._flatpickr.setDate('{date_str}');", input_element)
             time.sleep(0.5)
             
@@ -224,7 +227,6 @@ class BookingTicketService:
             time_str = booking_info.booking_time.strftime("%H:%M")
             time_input.send_keys(time_str)
             time.sleep(0.5)
-            
             # 填寫票種信息
             self._fill_ticket_counts(driver, booking_info)
         
@@ -242,51 +244,55 @@ class BookingTicketService:
         """
         try:
             # 全票
-            adult_input = driver.find_element(By.NAME, "ticketPanel:rows:0:ticketCount")
-            adult_input.clear()
-            adult_input.send_keys(str(booking_info.adult_count))
+            adult_select = Select(driver.find_element(By.NAME, "ticketPanel:rows:0:ticketAmount"))
+            adult_select.select_by_value(str(booking_info.adult_count) + "F")
             time.sleep(0.2)
             
             # 孩童票
-            child_input = driver.find_element(By.NAME, "ticketPanel:rows:1:ticketCount")
-            child_input.clear()
-            child_input.send_keys(str(booking_info.child_count))
+            child_select = Select(driver.find_element(By.NAME, "ticketPanel:rows:1:ticketAmount"))
+            child_select.select_by_value(str(booking_info.child_count) + "H")
             time.sleep(0.2)
+
+            # 愛心票
+            disabled_select = Select(driver.find_element(By.NAME, "ticketPanel:rows:2:ticketAmount"))
+            disabled_select.select_by_value(str(booking_info.disabled_count) + "W")
+            time.sleep(0.2)
+
+            # 敬老票
+            elder_select = Select(driver.find_element(By.NAME, "ticketPanel:rows:3:ticketAmount"))
+            elder_select.select_by_value(str(booking_info.elder_count) + "E")
+            time.sleep(0.2)
+
             
             # 大學生票
-            student_input = driver.find_element(By.NAME, "ticketPanel:rows:2:ticketCount")
-            student_input.clear()
-            student_input.send_keys(str(booking_info.student_count))
+            student_select = Select(driver.find_element(By.NAME, "ticketPanel:rows:4:ticketAmount"))
+            student_select.select_by_value(str(booking_info.student_count) + "P")
             time.sleep(0.2)
-            
-            # 敬老票
-            elder_input = driver.find_element(By.NAME, "ticketPanel:rows:3:ticketCount")
-            elder_input.clear()
-            elder_input.send_keys(str(booking_info.elder_count))
-            time.sleep(0.2)
-            
-            # 愛心票
-            disabled_input = driver.find_element(By.NAME, "ticketPanel:rows:4:ticketCount")
-            disabled_input.clear()
-            disabled_input.send_keys(str(booking_info.disabled_count))
-            time.sleep(0.2)
+           
         except Exception as e:
             print(f"填寫票型數量失敗: {str(e)}")
             raise
     
-    def _handle_captcha_and_search(self, driver: webdriver.Edge) -> None:
+    def _handle_captcha_and_search(self, driver: webdriver.Edge, thread_id: int) -> None:
         """
         處理驗證碼並執行查詢
         
         Args:
             driver: WebDriver實例
+            thread_id: 線程ID
         """
         try:
             # 這裡需要使用2Captcha API進行驗證碼識別
             # 由於沒有提供具體的實現細節，這裡使用占位符
-            print("驗證碼處理未實現 - 需要配置2Captcha API")
-            
-            # 暫時跳過驗證碼，直接點擊查詢
+
+            image_name = f"captcha_{thread_id:05d}.png"
+            img_src = driver.find_element(By.ID, "BookingS1Form_homeCaptcha_passCode")
+            img_src.screenshot(image_name)
+            result = self.SOLVER.normal(image_name)
+            driver.find_element(By.ID, "securityCode").send_keys(result['code'].upper())
+            os.remove(image_name)
+            time.sleep(0.5)
+
             submit_btn = driver.find_element(By.ID, "SubmitButton")
             driver.execute_script("arguments[0].click();", submit_btn)
             time.sleep(2)
@@ -361,9 +367,9 @@ class BookingTicketService:
                 driver.execute_script("arguments[0].click();", member_checkbox)
                 time.sleep(0.2)
                 
-                member_input = driver.find_element(By.ID, "memberAccount")
-                member_input.send_keys(booking_info.user_id)
-                time.sleep(0.3)
+                # member_input = driver.find_element(By.ID, "msNumber")
+                # member_input.send_keys(booking_info.user_id)
+                # time.sleep(0.3)
             
             # 勾選同意條款
             agree_checkbox = driver.find_element(By.NAME, 'agree')
