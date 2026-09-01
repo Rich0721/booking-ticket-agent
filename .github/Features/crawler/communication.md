@@ -31,5 +31,5 @@
             - /etc/timezone:/etc/timezone:ro
         - environment: 請確認程式內所需要的環境變數
     - 相關環境變數直接回填至[env folder](../../../env)所有的環境變數文件
-- 完成開發:
+- 完成開發: 2026-08-28
 - PM確認:
