@@ -43,9 +43,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      args:
-        NODE_ENV: ${NODE_ENV:-production}
-        REACT_APP_BACKEND_URL: ${REACT_APP_BACKEND_URL:-http://localhost:8000}
     ports:
       - "80:80"
     volumes:

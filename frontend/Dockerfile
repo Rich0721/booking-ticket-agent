@@ -3,14 +3,6 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# Accept build arguments
-ARG NODE_ENV=production
-ARG REACT_APP_BACKEND_URL=http://localhost:8000
-
-# Set environment variables for build
-ENV NODE_ENV=${NODE_ENV}
-ENV REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL}
-
 # Copy package files
 COPY package*.json ./
 
@@ -20,6 +12,10 @@ RUN npm install
 # Copy source code and env files
 COPY . .
 COPY ../env/.env.prod ./.env
+
+# Build the application with default environment variables
+ENV NODE_ENV=production
+ENV REACT_APP_BACKEND_URL=http://localhost:8000
 
 # Build the application
 RUN npm run build
