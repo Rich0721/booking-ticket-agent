@@ -196,3 +196,21 @@
 - 錯誤原因:
 - 完成開發: 2026-08-21
 - PM確認:
+
+
+### Requirement - Docker Compose設定
+
+- 分支名稱: feature_frontend_docker_compose
+- 需求說明: 撰寫Frontend所需的Docker Compose配置，確保使用單一的Docker Compose文件即可啟動所有相關服務
+    - 將DOCKER資訊填寫至[docker-compose.yaml](../../../docker-compose.yaml)
+        - Service name: frontend
+        - image: frontend:{APP_VERSION:latest}
+        - container_name: frontend-container
+        - volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - /etc/timezone:/etc/timezone:ro
+        - environment: 請確認程式內所需要的環境變數
+    - 使用nginx作為前端端服務的反向代理
+    - 相關環境變數直接回填至[env folder](../../../env)所有的環境變數文件
+- 完成開發:
+- PM確認:
