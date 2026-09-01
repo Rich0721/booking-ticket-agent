@@ -37,5 +37,20 @@ services:
       context: ./crawler
       dockerfile: Dockerfile
 
+  frontend:
+    image: frontend:${APP_VERSION:-latest}
+    container_name: frontend-container
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    environment:
+      REACT_APP_BACKEND_URL: ${REACT_APP_BACKEND_URL:-http://localhost:8000}
+    restart: unless-stopped
+
 volumes:
   pg_data_agent:

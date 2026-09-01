@@ -9,28 +9,34 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy source code
+# Copy source code and env files
 COPY . .
+COPY ../env/.env.prod ./.env
+
+# Build the application with default environment variables
+ENV NODE_ENV=production
+ENV REACT_APP_BACKEND_URL=http://localhost:8000
 
 # Build the application
 RUN npm run build
 
-# Production stage
-FROM node:18-alpine
+# Production stage with nginx
+FROM nginx:alpine
 
-WORKDIR /app
+# Remove default nginx config
+RUN rm /etc/nginx/conf.d/default.conf
 
-# Install serve to run the application
-RUN npm install -g serve
+# Copy custom nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy built application from builder
-COPY --from=builder /app/build ./build
+COPY --from=builder /app/build /usr/share/nginx/html
 
 # Expose port
-EXPOSE 3000
+EXPOSE 80
 
 # Set environment
 ENV REACT_APP_ENV=production
 
-# Start the application
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
